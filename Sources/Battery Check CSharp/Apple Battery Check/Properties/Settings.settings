@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Apple_Battery_Check.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="INTERFACE_TYPE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HDQ</Value>
+    </Setting>
+    <Setting Name="SERIAL_BAUDRATE" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">57600</Value>
+    </Setting>
+    <Setting Name="CELSIUS_OFFSET" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">273.1</Value>
+    </Setting>
+    <Setting Name="DECIMAL_FACTOR" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">0.1</Value>
+    </Setting>
+    <Setting Name="SHIFT_VOLTAGE" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="SEPARATOR_SLASH" Type="System.Char" Scope="Application">
+      <Value Profile="(Default)">/</Value>
+    </Setting>
+    <Setting Name="SEPARATOR_DOT" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.</Value>
+    </Setting>
+    <Setting Name="DATALOG_STATE" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

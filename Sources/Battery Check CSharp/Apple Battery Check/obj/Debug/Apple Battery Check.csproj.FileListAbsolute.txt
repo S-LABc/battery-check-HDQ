@@ -1,0 +1,41 @@
+I:\Apple Service Tools\Apple Battery Check\bin\Debug\Apple Battery Check.exe.config
+I:\Apple Service Tools\Apple Battery Check\bin\Debug\Apple Battery Check.exe
+I:\Apple Service Tools\Apple Battery Check\bin\Debug\Apple Battery Check.pdb
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple Battery Check.csprojAssemblyReference.cache
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple_Battery_Check.Properties.Resources.resources
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple Battery Check.csproj.GenerateResource.cache
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple Battery Check.exe
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple Battery Check.pdb
+I:\Apple Service Tools\Apple Battery Check\bin\Debug\MetroFramework.Design.dll
+I:\Apple Service Tools\Apple Battery Check\bin\Debug\MetroFramework.dll
+I:\Apple Service Tools\Apple Battery Check\bin\Debug\MetroFramework.Fonts.dll
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple_Battery_Check.BatteryCheck.resources
+I:\Apple Service Tools\Apple Battery Check\obj\Debug\Apple Battery Check.csproj.CopyComplete
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\Apple Battery Check.exe.config
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\Apple Battery Check.exe
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\Apple Battery Check.pdb
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\MetroFramework.Design.dll
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\MetroFramework.dll
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\MetroFramework.Fonts.dll
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.csprojAssemblyReference.cache
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple_Battery_Check.BatteryCheck.resources
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple_Battery_Check.Properties.Resources.resources
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.csproj.GenerateResource.cache
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.csproj.CopyComplete
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.exe
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.pdb
+E:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple_Battery_Check.Properties.Messages.resources
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\Apple Battery Check.exe.config
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\Apple Battery Check.exe
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\Apple Battery Check.pdb
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\MetroFramework.Design.dll
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\MetroFramework.dll
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\bin\Debug\MetroFramework.Fonts.dll
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.csprojAssemblyReference.cache
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple_Battery_Check.BatteryCheck.resources
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple_Battery_Check.Properties.Messages.resources
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple_Battery_Check.Properties.Resources.resources
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.csproj.GenerateResource.cache
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.csproj.CopyComplete
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.exe
+D:\Проекты\Apple Service Tools\C Sharp Client\Apple Battery Check\obj\Debug\Apple Battery Check.pdb
