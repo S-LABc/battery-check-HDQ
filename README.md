@@ -9,4 +9,4 @@
 
 # Сыылки
 
-* Видео с примером - https://youtu.be/LLBH9YZpjwg
+* [Видео с примером](https://youtu.be/LLBH9YZpjwg)
