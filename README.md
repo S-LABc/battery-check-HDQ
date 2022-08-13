@@ -6,8 +6,3 @@
 # Назначение файлов
 * Sources - Исхожники для Arduino и C#
 * Apple Battery Check - Готовая программа на .NET
-
-# Ссылки
-
-* [Видео с примером](https://youtu.be/LLBH9YZpjwg)
-* [HDQLib](https://github.com/mozzwald/HDQLib)
