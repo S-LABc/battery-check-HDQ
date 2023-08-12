@@ -10,7 +10,7 @@
  * 
 */
 
-#include "APPLE_BATTERY_CHECK.h"
+#include "BATTERY_CHECK.h"
 #include "BATTERY_HDQ.h"
 
 char _serial_input = 0;
