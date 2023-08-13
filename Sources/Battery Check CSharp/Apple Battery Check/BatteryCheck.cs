@@ -83,16 +83,16 @@ namespace Apple_Battery_Check
             //Формирование содержимго файла логов
             string[] textData = {
                         cbInterface.Text,
-                        lDesignCapacity.Text + Resources.SPACE_TEXT +  lblDesignCapacity.Text,
-                        lStateOfCharge.Text + Resources.SPACE_TEXT + lblStateOfCharge.Text,
                         lCycleCount.Text + Resources.SPACE_TEXT + lblCycleCount.Text,
-                        lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text,
-                        lFullChargeCapacity.Text + Resources.SPACE_TEXT + lblFullChargeCapacity.Text,
-                        lRemainingCapacity.Text + Resources.SPACE_TEXT + lblRemainingCapacity.Text,
-                        lTemperature.Text + Resources.SPACE_TEXT + lblTemperature.Text,
+                        lDesignCapacity.Text + Resources.SPACE_TEXT +  lblDesignCapacity.Text,
                         lDeviceType.Text + Resources.SPACE_TEXT + lblDeviceType.Text,
+                        lFirmwareVersion.Text + Resources.SPACE_TEXT + lblFirmwareVersion.Text,
+                        lFullChargeCapacity.Text + Resources.SPACE_TEXT + lblFullChargeCapacity.Text,
                         lHardwareVersion.Text + Resources.SPACE_TEXT + lblHardwareVersion.Text,
-                        lFirmwareVersion.Text + Resources.SPACE_TEXT + lblFirmwareVersion.Text
+                        lRemainingCapacity.Text + Resources.SPACE_TEXT + lblRemainingCapacity.Text,
+                        lStateOfCharge.Text + Resources.SPACE_TEXT + lblStateOfCharge.Text,
+                        lTemperature.Text + Resources.SPACE_TEXT + lblTemperature.Text,
+                        lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text
                      };
 
             //Создать файл логов
@@ -103,16 +103,19 @@ namespace Apple_Battery_Check
         private void LabelDataAdd(string[] addData)
         {
             //Заполнение полей пересчитанными данными
-            lblCycleCount.Text = addData[4];
-            lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[1]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
             lblTemperature.Text = Convert.ToString(Convert.ToDouble(addData[0]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET) + Resources.SUFFIX_CELSIUS_DEGREE;
-            lblStateOfCharge.Text = addData[5] + Resources.SUFFIX_PERCENT;
-            lblDesignCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY;
+            lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[1]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
+            lblRemainingCapacity.Text = addData[2] + Resources.SUFFIX_CAPACITY; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
             lblFullChargeCapacity.Text = addData[3] + Resources.SUFFIX_CAPACITY;
-            lblRemainingCapacity.Text = addData[2] + Resources.SUFFIX_CAPACITY;
+            lblDesignCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY;
+            lblCycleCount.Text = addData[4];
+            lblStateOfCharge.Text = addData[5] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
+            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[7];
             lblFirmwareVersion.Text = addData[8].Insert(1, Settings.Default.SEPARATOR_DOT);
             lblHardwareVersion.Text = Resources.PREFIX_HEXADECIMAL + Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(addData[9].ToUpper());
-            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[7];
+            //HESAPLANAN VERİLER
+            lblBatteryHealth.Text = ((Convert.ToDouble(addData[3]) / Convert.ToDouble(addData[6])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
+
         }
 
         //Обновление списка портов
