@@ -145,7 +145,7 @@
     <comment>Стартовое значение для текста в поле данных лейбла</comment>
   </data>
   <data name="PREFIX_CONTROLLER" xml:space="preserve">
-    <value>bq27</value>
+    <value>BQ27</value>
     <comment>Приставка для модкли контроллера</comment>
   </data>
   <data name="PREFIX_HEXADECIMAL" xml:space="preserve">
@@ -157,19 +157,19 @@
     <comment>Разделитель внутри документа логов</comment>
   </data>
   <data name="SUFFIX_CAPACITY" xml:space="preserve">
-    <value> мАч</value>
+    <value> mAh</value>
     <comment>Окончание для полей ЁМКОСТИ</comment>
   </data>
   <data name="SUFFIX_CELSIUS_DEGREE" xml:space="preserve">
-    <value> °C</value>
+    <value>°C</value>
     <comment>Окончание для поля ТЕМПЕРАТУРА</comment>
   </data>
   <data name="SUFFIX_PERCENT" xml:space="preserve">
-    <value> %</value>
+    <value>%</value>
     <comment>Окончание для поля УРОВНЯ ЗАРЯДКИ</comment>
   </data>
   <data name="SUFFIX_VOLTAGE" xml:space="preserve">
-    <value> В</value>
+    <value> V</value>
     <comment>Окончание для поля НАПРЯЖЕНИЕ</comment>
   </data>
   <data name="TEXT_HDQ" xml:space="preserve">

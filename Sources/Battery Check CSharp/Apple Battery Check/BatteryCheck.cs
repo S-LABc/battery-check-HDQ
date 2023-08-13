@@ -171,6 +171,7 @@ namespace Apple_Battery_Check
         private void DataProcessing(string dataReceived)
         {
             //Разбить принятый пакет на элементы
+            Console.WriteLine(dataReceived);
             string[] tempSplited = dataReceived.Split(Settings.Default.SEPARATOR_SLASH);
 
             try
@@ -210,8 +211,7 @@ namespace Apple_Battery_Check
 
         private void YT_Click(object sender, EventArgs e)
         {
-            //Вызов метода перехода по ссылке
-            Process.Start("https://www.youtube.com/c/SLABORATORY");
+            
         }
     }
 }

@@ -1,39 +1,40 @@
 #ifndef BATTERY_HDQ_H 
-#define BATTER_HDQ_H
+#define BATTERY_HDQ_H
 
-//Вывод Arduino к которому подключен вывод HDQ АКБ
-#define BATTERY_CONNECT_PIN 2
+// Arduino'da bağlı olan HDQ pil pininin tanımı
+#define BATTERY_CONNECT_PIN 5
 
-//Разделитель для парсера в GUI
+// GUI için ayrıştırıcı karakter
 #define SEPARATOR_CHARACTER '/'
 
-//Пустая строка
+// Boş karakter dizisi
 #define EMPTY_STRING ""
 
 /**
- * Пара стандартных Байт команд
+ * Standart Komutların Kodları
  * 
- *  LOW/HIGH - Описание
- * 0x06/0x07 - Температура град К
- * 0x08/0x09 - Нарпяжение мВ
- * 0x10/0x11 - Текущая емкость мАч
- * 0x12/0x13 - Доступная емкость мАч
- * 0x2A/0x2B - Количество циклов
- * 0x2C/0x2D - Уровень заряда %
- * 0x3C/0x3D - Заводская емкость мАч (из таблицы рассширенных команд)
+ * LOW/HIGH - Açıklama
+ * 0x06/0x07 - Sıcaklık (Kelvin)
+ * 0x08/0x09 - Gerilim (mV)
+ * 0x10/0x11 - Şuanki Kapasite (mAh)
+ * 0x12/0x13 - Kullanılabilir Kapasite (mAh)
+ * 0x2A/0x2B - Döngü Sayısı
+ * 0x2C/0x2D - Şarj Seviyesi (%)
+ * 0x3C/0x3D - Fabrika Kapasitesi (mAh) (Genişletilmiş Komut Tablosundan)
 **/
 #define STANDARD_COMMANDS_CODE {0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x2A, 0x2B, 0x2C, 0x2D, 0x3C, 0x3D}
 
 /**
- * Байты подкоманд
+ * Alt Komutların Kodları
  * 
- * COM  - Описание
+ * COM  - Açıklama
  * 0x1  - 
  * 0x00 - 
- * 0x01 - Модель контроллера
- * 0x02 - Версия программного обеспечения
- * 0x03 - Версия аппаратного обеспечения
+ * 0x01 - Kontrolcü Modeli
+ * 0x02 - Yazılım Sürümü
+ * 0x03 - Donanım Sürümü
 **/
 #define SUB_COMMANDS_CODE {0x1, 0x00, 0x01, 0x02, 0x03}
 
 #endif
+

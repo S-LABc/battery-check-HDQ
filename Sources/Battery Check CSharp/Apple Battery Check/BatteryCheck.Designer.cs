@@ -35,6 +35,7 @@ namespace Apple_Battery_Check
             this.cbPrort = new MetroFramework.Controls.MetroComboBox();
             this.btnRead = new MetroFramework.Controls.MetroButton();
             this.chbDataLog = new System.Windows.Forms.CheckBox();
+            this.YT = new MetroFramework.Controls.MetroLink();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lDesignCapacity = new System.Windows.Forms.Label();
             this.lStateOfCharge = new System.Windows.Forms.Label();
@@ -58,7 +59,6 @@ namespace Apple_Battery_Check
             this.lblHardwareVersion = new System.Windows.Forms.Label();
             this.lblFirmwareVersion = new System.Windows.Forms.Label();
             this.serialPortBAT = new System.IO.Ports.SerialPort(this.components);
-            this.YT = new MetroFramework.Controls.MetroLink();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -96,7 +96,7 @@ namespace Apple_Battery_Check
             this.cbPrort.Location = new System.Drawing.Point(93, 5);
             this.cbPrort.Margin = new System.Windows.Forms.Padding(5);
             this.cbPrort.Name = "cbPrort";
-            this.cbPrort.PromptText = "Порт";
+            this.cbPrort.PromptText = "Port";
             this.cbPrort.Size = new System.Drawing.Size(79, 29);
             this.cbPrort.Sorted = true;
             this.cbPrort.TabIndex = 8;
@@ -111,7 +111,7 @@ namespace Apple_Battery_Check
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(113, 29);
             this.btnRead.TabIndex = 7;
-            this.btnRead.Text = "Прочитать";
+            this.btnRead.Text = "Batarya Oku";
             this.btnRead.UseSelectable = true;
             this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 
@@ -121,11 +121,22 @@ namespace Apple_Battery_Check
             this.chbDataLog.Location = new System.Drawing.Point(5, 49);
             this.chbDataLog.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.chbDataLog.Name = "chbDataLog";
-            this.chbDataLog.Size = new System.Drawing.Size(196, 20);
+            this.chbDataLog.Size = new System.Drawing.Size(171, 20);
             this.chbDataLog.TabIndex = 10;
-            this.chbDataLog.Text = "Сохранять данные в файл";
+            this.chbDataLog.Text = "Verileri dosyaya kaydet.";
             this.chbDataLog.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chbDataLog.UseVisualStyleBackColor = true;
+            // 
+            // YT
+            // 
+            this.YT.Location = new System.Drawing.Point(186, 49);
+            this.YT.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.YT.Name = "YT";
+            this.YT.Size = new System.Drawing.Size(75, 23);
+            this.YT.TabIndex = 11;
+            this.YT.Text = "YouTube";
+            this.YT.UseSelectable = true;
+            this.YT.Click += new System.EventHandler(this.YT_Click);
             // 
             // flowLayoutPanel2
             // 
@@ -154,9 +165,9 @@ namespace Apple_Battery_Check
             this.lDesignCapacity.Location = new System.Drawing.Point(5, 10);
             this.lDesignCapacity.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lDesignCapacity.Name = "lDesignCapacity";
-            this.lDesignCapacity.Size = new System.Drawing.Size(159, 20);
+            this.lDesignCapacity.Size = new System.Drawing.Size(142, 20);
             this.lDesignCapacity.TabIndex = 4;
-            this.lDesignCapacity.Text = "Заводская ёмкость";
+            this.lDesignCapacity.Text = "Tasarım Kapasitesi";
             this.lDesignCapacity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lStateOfCharge
@@ -166,9 +177,9 @@ namespace Apple_Battery_Check
             this.lStateOfCharge.Location = new System.Drawing.Point(5, 45);
             this.lStateOfCharge.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lStateOfCharge.Name = "lStateOfCharge";
-            this.lStateOfCharge.Size = new System.Drawing.Size(140, 20);
+            this.lStateOfCharge.Size = new System.Drawing.Size(139, 20);
             this.lStateOfCharge.TabIndex = 3;
-            this.lStateOfCharge.Text = "Уровень зарядки";
+            this.lStateOfCharge.Text = "Şarj Olma Durumu";
             this.lStateOfCharge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lCycleCount
@@ -178,9 +189,9 @@ namespace Apple_Battery_Check
             this.lCycleCount.Location = new System.Drawing.Point(5, 80);
             this.lCycleCount.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lCycleCount.Name = "lCycleCount";
-            this.lCycleCount.Size = new System.Drawing.Size(169, 20);
+            this.lCycleCount.Size = new System.Drawing.Size(102, 20);
             this.lCycleCount.TabIndex = 0;
-            this.lCycleCount.Text = "Циклов перезарядки";
+            this.lCycleCount.Text = "Çevrim Sayısı";
             this.lCycleCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lVoltage
@@ -190,9 +201,9 @@ namespace Apple_Battery_Check
             this.lVoltage.Location = new System.Drawing.Point(5, 115);
             this.lVoltage.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lVoltage.Name = "lVoltage";
-            this.lVoltage.Size = new System.Drawing.Size(104, 20);
+            this.lVoltage.Size = new System.Drawing.Size(49, 20);
             this.lVoltage.TabIndex = 1;
-            this.lVoltage.Text = "Напряжение";
+            this.lVoltage.Text = "Voltaj";
             this.lVoltage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lFullChargeCapacity
@@ -202,9 +213,9 @@ namespace Apple_Battery_Check
             this.lFullChargeCapacity.Location = new System.Drawing.Point(5, 150);
             this.lFullChargeCapacity.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lFullChargeCapacity.Name = "lFullChargeCapacity";
-            this.lFullChargeCapacity.Size = new System.Drawing.Size(157, 20);
+            this.lFullChargeCapacity.Size = new System.Drawing.Size(114, 20);
             this.lFullChargeCapacity.TabIndex = 5;
-            this.lFullChargeCapacity.Text = "Доступная ёмкость";
+            this.lFullChargeCapacity.Text = "Şarj Kapasitesi";
             this.lFullChargeCapacity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lRemainingCapacity
@@ -214,9 +225,9 @@ namespace Apple_Battery_Check
             this.lRemainingCapacity.Location = new System.Drawing.Point(5, 185);
             this.lRemainingCapacity.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lRemainingCapacity.Name = "lRemainingCapacity";
-            this.lRemainingCapacity.Size = new System.Drawing.Size(140, 20);
+            this.lRemainingCapacity.Size = new System.Drawing.Size(158, 20);
             this.lRemainingCapacity.TabIndex = 6;
-            this.lRemainingCapacity.Text = "Текущая ёмкость";
+            this.lRemainingCapacity.Text = "Kalan Şarj Kapasitesi";
             this.lRemainingCapacity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lTemperature
@@ -226,9 +237,9 @@ namespace Apple_Battery_Check
             this.lTemperature.Location = new System.Drawing.Point(5, 220);
             this.lTemperature.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lTemperature.Name = "lTemperature";
-            this.lTemperature.Size = new System.Drawing.Size(108, 20);
+            this.lTemperature.Size = new System.Drawing.Size(62, 20);
             this.lTemperature.TabIndex = 2;
-            this.lTemperature.Text = "Температура";
+            this.lTemperature.Text = "Sıcaklık";
             this.lTemperature.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lDeviceType
@@ -238,9 +249,9 @@ namespace Apple_Battery_Check
             this.lDeviceType.Location = new System.Drawing.Point(5, 255);
             this.lDeviceType.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lDeviceType.Name = "lDeviceType";
-            this.lDeviceType.Size = new System.Drawing.Size(174, 20);
+            this.lDeviceType.Size = new System.Drawing.Size(72, 20);
             this.lDeviceType.TabIndex = 7;
-            this.lDeviceType.Text = "Модель контроллера";
+            this.lDeviceType.Text = "Aygıt Tipi";
             this.lDeviceType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lHardwareVersion
@@ -250,9 +261,9 @@ namespace Apple_Battery_Check
             this.lHardwareVersion.Location = new System.Drawing.Point(5, 290);
             this.lHardwareVersion.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lHardwareVersion.Name = "lHardwareVersion";
-            this.lHardwareVersion.Size = new System.Drawing.Size(168, 20);
+            this.lHardwareVersion.Size = new System.Drawing.Size(133, 20);
             this.lHardwareVersion.TabIndex = 9;
-            this.lHardwareVersion.Text = "Версия контроллера";
+            this.lHardwareVersion.Text = "Donanım Sürümü";
             this.lHardwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lFirmwareVersion
@@ -262,9 +273,9 @@ namespace Apple_Battery_Check
             this.lFirmwareVersion.Location = new System.Drawing.Point(5, 325);
             this.lFirmwareVersion.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lFirmwareVersion.Name = "lFirmwareVersion";
-            this.lFirmwareVersion.Size = new System.Drawing.Size(143, 20);
+            this.lFirmwareVersion.Size = new System.Drawing.Size(119, 20);
             this.lFirmwareVersion.TabIndex = 8;
-            this.lFirmwareVersion.Text = "Версия прошивки";
+            this.lFirmwareVersion.Text = "Yazılım Sürümü";
             this.lFirmwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel3
@@ -400,17 +411,6 @@ namespace Apple_Battery_Check
             // 
             this.serialPortBAT.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPortBAT_DataReceived);
             // 
-            // YT
-            // 
-            this.YT.Location = new System.Drawing.Point(211, 49);
-            this.YT.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
-            this.YT.Name = "YT";
-            this.YT.Size = new System.Drawing.Size(75, 23);
-            this.YT.TabIndex = 11;
-            this.YT.Text = "YouTube";
-            this.YT.UseSelectable = true;
-            this.YT.Click += new System.EventHandler(this.YT_Click);
-            // 
             // BatteryCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -426,7 +426,7 @@ namespace Apple_Battery_Check
             this.Padding = new System.Windows.Forms.Padding(10, 70, 10, 10);
             this.Resizable = false;
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.None;
-            this.Text = "Apple Battery Check";
+            this.Text = "Apple Batarya Kontrolü";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BatteryCheck_FormClosing);
             this.flowLayoutPanel1.ResumeLayout(false);
