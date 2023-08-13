@@ -1,8 +1,9 @@
-# battery-check-HDQ
-Считывание данных из контроллеров АКБ от iPhone. В основе библиотека [HDQLib](https://github.com/mozzwald/HDQLib)
+# iPhone Pil Kontrolü (HDQ)
 
-Поддерживается вплоть до 7+
+Bu projede, iPhone'un pil kontrol cihazlarından veri okuma işlemi ele alınmıştır. Bu işlem, [HDQLib](https://github.com/mozzwald/HDQLib) kütüphanesi kullanılarak gerçekleştirilmektedir.
 
-# Назначение файлов
-* Sources - Исхожники для Arduino и C#
-* Apple Battery Check - Готовая программа на .NET
+Bu proje, iPhone 7+ modeline kadar olan tüm modelleri desteklemektedir.
+
+## Dosya Amaçları
+* `Sources` - Arduino ve C# için kaynak kodları
+* `Apple Battery Check` - .NET üzerinde çalışan hazır bir program
