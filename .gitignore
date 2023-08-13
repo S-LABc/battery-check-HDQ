@@ -1,0 +1,6 @@
+﻿################################################################################
+# Bu .gitignore dosyası Microsoft(R) Visual Studio tarafından otomatik olarak oluşturulmuştur.
+################################################################################
+
+/.vs
+/Sources/Battery Check CSharp/.vs/Apple Battery Check/FileContentIndex
