@@ -9,7 +9,7 @@ HDQ BAT(BATTERY_CONNECT_PIN);
 const byte _std_commands [] = STANDARD_COMMANDS_CODE;
 const byte _sub_commands [] = SUB_COMMANDS_CODE;
 const byte _ext_commands [] = EXTD_CMD_MANUFACTURE_BLOCK_A_B_C;
-
+uint8_t _block_data[EXTD_CMD_BLOCK_DATA_H - EXTD_CMD_BLOCK_DATA_L]; // Массив для данных из регистров 0x40-0x5f
 // Üst ve alt bayt için değişkenler
 static byte _bat_low_byte = 0;
 static byte _bat_high_byte = 0;
@@ -44,6 +44,18 @@ String Battery_HDQ_Data_Read() {
 }
 
 /*
+ * @brief: получить информацию о производителе. Блок A
+ * @return: указатель на массив символов (строка)
+ */
+char* getManufacturerInfoBlock(byte payload) {
+  
+  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, payload);
+  pullBlockData(_block_data);
+
+  return (char*)_block_data;
+}
+
+/*
  * @brief: получить данные из регистров 0x40...0x5F
  * @param str[]: массив для хранения считанных данных
  */
@@ -53,18 +65,6 @@ void pullBlockData(uint8_t str[]) {
     str[count] = BAT.read(i);
     count++;
   }
-}
-uint8_t _block_data[EXTD_CMD_BLOCK_DATA_H - EXTD_CMD_BLOCK_DATA_L]; // Массив для данных из регистров 0x40-0x5f
-/*
- * @brief: получить информацию о производителе. Блок A
- * @return: указатель на массив символов (строка)
- */
-char* getManufacturerInfoBlock(byte adress) {
-  
-  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, adress);
-  pullBlockData(_block_data);
-
-  return (char*)_block_data;
 }
 
 
