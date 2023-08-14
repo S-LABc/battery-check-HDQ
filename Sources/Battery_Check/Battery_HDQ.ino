@@ -37,7 +37,7 @@ String Battery_HDQ_Data_Read() {
     }
 
    for(uint8_t i = 0; i < sizeof(_ext_commands); i++) {
-     _temp += getManufacturerInfoBlock(_ext_commands[i]);
+     _temp += String(getManufacturerInfoBlock(_ext_commands[i])) + SEPARATOR_CHARACTER;
     }
   
   return _temp;
