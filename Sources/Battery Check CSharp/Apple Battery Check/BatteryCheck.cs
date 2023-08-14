@@ -112,9 +112,14 @@ namespace Apple_Battery_Check
             lblStateOfCharge.Text = addData[5] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
             lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[7];
             lblFirmwareVersion.Text = addData[8].Insert(1, Settings.Default.SEPARATOR_DOT);
-            lblHardwareVersion.Text = Resources.PREFIX_HEXADECIMAL + Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(addData[9].ToUpper());
+            //lblHardwareVersion.Text = Resources.PREFIX_HEXADECIMAL + Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(addData[9].ToUpper());
+            lblHardwareVersion.Text = Convert.ToInt32(addData[9].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
+
             //HESAPLANAN VERİLER
             lblBatteryHealth.Text = ((Convert.ToDouble(addData[3]) / Convert.ToDouble(addData[6])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
+            
+
+
 
         }
 
