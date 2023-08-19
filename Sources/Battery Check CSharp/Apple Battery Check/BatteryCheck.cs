@@ -1,4 +1,5 @@
 ﻿using Apple_Battery_Check.Properties;
+using Bulb;
 using MetroFramework;
 using MetroFramework.Forms;
 using System;
@@ -103,22 +104,25 @@ namespace Apple_Battery_Check
         private void LabelDataAdd(string[] addData)
         {
             //Заполнение полей пересчитанными данными
-            lblTemperature.Text = Convert.ToString(Convert.ToDouble(addData[0]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET) + Resources.SUFFIX_CELSIUS_DEGREE;
-            lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[1]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
-            lblRemainingCapacity.Text = addData[2] + Resources.SUFFIX_CAPACITY; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
-            lblFullChargeCapacity.Text = addData[3] + Resources.SUFFIX_CAPACITY;
-            lblDesignCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY;
-            lblCycleCount.Text = addData[4];
-            lblStateOfCharge.Text = addData[5] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
-            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[7];
-            lblFirmwareVersion.Text = addData[8].Insert(1, Settings.Default.SEPARATOR_DOT);
-            //lblHardwareVersion.Text = Resources.PREFIX_HEXADECIMAL + Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(addData[9].ToUpper());
-            lblHardwareVersion.Text = Convert.ToInt32(addData[9].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
-
-            //HESAPLANAN VERİLER
-            lblBatteryHealth.Text = ((Convert.ToDouble(addData[3]) / Convert.ToDouble(addData[6])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
+            lblTemperature.Text = Convert.ToString(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET) + Resources.SUFFIX_CELSIUS_DEGREE;
+            lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[3]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
+            lblRemainingCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
+            lblFullChargeCapacity.Text = addData[7] + Resources.SUFFIX_CAPACITY;
+            lblCycleCount.Text = addData[18];
+            lblStateOfCharge.Text = addData[19] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
             
-
+            //EXTENDED COMMAND
+            lblDesignCapacity.Text = addData[27] + Resources.SUFFIX_CAPACITY;
+            //CONTROL SUB COMMANDS
+            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[31];
+            lblFirmwareVersion.Text = addData[32].Insert(1, Settings.Default.SEPARATOR_DOT);
+            lblHardwareVersion.Text = Convert.ToInt32(addData[33].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
+            
+            SN1.Text = addData[35];
+            SN2.Text = addData[36];
+            SN3.Text = addData[37];
+            ////HESAPLANAN VERİLER
+            lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
 
 
         }
@@ -219,7 +223,15 @@ namespace Apple_Battery_Check
 
         private void YT_Click(object sender, EventArgs e)
         {
-            
+            ledBulb1.On = !ledBulb1.On;
+        }
+        private int _blink = 0;
+        private void ledBulb1_Click(object sender, EventArgs e)
+        {
+            //((LedBulb)sender).On = !((LedBulb)sender).On;
+            if (_blink == 0) _blink = 500;
+            else _blink = 0;
+            ((LedBulb)sender).Blink(_blink);
         }
     }
 }

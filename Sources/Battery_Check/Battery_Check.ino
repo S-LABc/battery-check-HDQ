@@ -7,6 +7,7 @@
  * Telif Hakkı (C) 2019. v1.0 / Roman Sklyar S-LAB
  * YouTube https://www.youtube.com/channel/UCbkE52YKRphgkvQtdwzQbZQ
  * ARDUINO V1.8.10'da DERLENMİŞ
+ *https://www.ti.com/power-management/battery-management/fuel-gauges/products.html#
  * 
 */
 

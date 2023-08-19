@@ -28,11 +28,11 @@ String Battery_HDQ_Data_Read() {
     }
     
   // Kontrol bloğundaki alt komutların işlenmesi (burada veri aynı registerden okunur ama farklı registerlara önce komut girilir. )
-  for(uint8_t i = 2; i < sizeof(_sub_commands); i++) {
-      BAT.write(_sub_commands[1], _sub_commands[i]);
-      BAT.write(_sub_commands[0], _sub_commands[1]);
-      _bat_low_byte = BAT.read(_sub_commands[1]);
-      _bat_high_byte = BAT.read(_sub_commands[2]);
+  for(uint8_t i = 0; i < sizeof(_sub_commands); i++) {
+      BAT.write(0x00, _sub_commands[i]);
+      BAT.write(0x1, 0x00);
+      _bat_low_byte = BAT.read(0x00);
+      _bat_high_byte = BAT.read(0x01);
       _temp += String(word(_bat_high_byte, _bat_low_byte), HEX) + SEPARATOR_CHARACTER;
     }
 

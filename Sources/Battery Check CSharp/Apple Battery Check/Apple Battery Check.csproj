@@ -54,6 +54,9 @@
     <ApplicationIcon>Battery Charging.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LedBulb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LedBulb.1.0.0\lib\net48\LedBulb.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
@@ -139,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Battery Charging.ico" />
+    <Content Include="LedBulb.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
