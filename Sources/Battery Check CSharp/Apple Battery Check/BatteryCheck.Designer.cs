@@ -83,6 +83,7 @@ namespace Apple_Battery_Check
             this.circularProgressBar7 = new CircularProgressBar.CircularProgressBar();
             this.circularProgressBar8 = new CircularProgressBar.CircularProgressBar();
             this.circularProgressBar9 = new CircularProgressBar.CircularProgressBar();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -97,11 +98,12 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel1.Controls.Add(this.ledBulb1);
             this.flowLayoutPanel1.Controls.Add(this.chbDataLog);
             this.flowLayoutPanel1.Controls.Add(this.YT);
+            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 636);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 635);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(649, 80);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(796, 209);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // cbInterface
@@ -198,7 +200,7 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(10, 70);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 566);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 565);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // lTemperature
@@ -415,7 +417,7 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(186, 70);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(473, 566);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(620, 565);
             this.flowLayoutPanel3.TabIndex = 1;
             // 
             // lblTemperature
@@ -627,9 +629,9 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel4.Controls.Add(this.circularProgressBar8);
             this.flowLayoutPanel4.Controls.Add(this.circularProgressBar9);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(438, 70);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(585, 70);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(221, 566);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(221, 565);
             this.flowLayoutPanel4.TabIndex = 2;
             // 
             // cpbTempature
@@ -952,11 +954,18 @@ namespace Apple_Battery_Check
             this.circularProgressBar9.TextMargin = new System.Windows.Forms.Padding(0);
             this.circularProgressBar9.Value = 1;
             // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 42);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(790, 100);
+            this.flowLayoutPanel5.TabIndex = 13;
+            // 
             // BatteryCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 726);
+            this.ClientSize = new System.Drawing.Size(816, 854);
             this.Controls.Add(this.flowLayoutPanel4);
             this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.flowLayoutPanel2);
@@ -1037,6 +1046,7 @@ namespace Apple_Battery_Check
         private CircularProgressBar.CircularProgressBar circularProgressBar7;
         private CircularProgressBar.CircularProgressBar circularProgressBar8;
         private CircularProgressBar.CircularProgressBar circularProgressBar9;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
     }
 }
 

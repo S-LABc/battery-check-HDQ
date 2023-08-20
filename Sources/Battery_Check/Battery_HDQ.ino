@@ -45,6 +45,32 @@ String Battery_HDQ_Data_Read() {
   return _temp;
 }
 
+String Battery_HDQ_Data_Read_TEST() {
+
+  // Toplanmış değerler paketi için değişken
+  String _temp = EMPTY_STRING;
+
+    _temp +="Read\n";
+    _bat_low_byte = BAT.read(0x0A);
+    _bat_high_byte = BAT.read(0x0B);
+    _temp += String(word(_bat_high_byte, _bat_low_byte),HEX) + "\nWrite and Read\n";
+    
+    BAT.write(0x00, 0x00);
+    BAT.write(0x01, 0x00);
+    _bat_low_byte = BAT.read(0x00);
+    _bat_high_byte = BAT.read(0x01);
+    _temp += String(word(_bat_high_byte, _bat_low_byte),HEX) + "\n";
+    // BAT.write(0x00, _sub_commands[i]);
+    // BAT.write(0x01, 0x00);
+    // _bat_low_byte = BAT.read(0x00);
+    // _bat_high_byte = BAT.read(0x01);
+    // _temp += String(word(_bat_high_byte, _bat_low_byte), HEX) + SEPARATOR_CHARACTER;
+    
+    //_temp += String(getManufacturerInfoBlock(_ext_commands[i])) + SEPARATOR_CHARACTER;
+
+  return _temp;
+}
+
 /*
  * @brief: получить контрольную сумму блока данных в диапазоне 0x40...0x5f в шестнадцатиричном виде
  * @return: целое число размером один байт uint8_t

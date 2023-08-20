@@ -3,7 +3,9 @@ using Bulb;
 using MetroFramework;
 using MetroFramework.Forms;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
@@ -13,17 +15,40 @@ using System.Windows.Forms;
 
 namespace Apple_Battery_Check
 {
+    public enum ControlStatus
+    {
+        SE_EN, FAS, SS, CALMODE, CCA, BCA, QMAXUPDATE, HOSTIE,
+        SHUTDN_EN, HIBERNATE, FULLSLEEP, SLEEP, LDMD, RUP_DIS, VOK, QEN
+    }
     public partial class BatteryCheck : MetroForm
     {
+        private Dictionary<ControlStatus, string> ControlStatusDescriptions = new Dictionary<ControlStatus, string>
+        {
+            { ControlStatus.SE_EN, "Status bit indicating if shutdown is active" },
+            { ControlStatus.FAS, "Status bit indicating the fuel gauge is in FULL ACCESS SEALED state. Active when set (no data flash access)." },
+            { ControlStatus.SS, "Status bit indicating the fuel gauge is in the SEALED state. Active when set (no ROM access)." },
+            { ControlStatus.CALMODE, "Status bit indicating the calibration function is active. True when set. Default is 0." },
+            { ControlStatus.CCA, "Status bit indicating the Coulomb Counter Calibration routine is active. The CCA routine takes place approximately 1 minute after the initialization and periodically as gauging conditions change. Active when set." },
+            { ControlStatus.BCA, "Status bit indicating the Board Calibration routine is active. Active when set." },
+            { ControlStatus.QMAXUPDATE, "Status bit toggling every time there is a QMAX update" },
+            { ControlStatus.HOSTIE, "Status bit indicating SET_HDQINTEN subcommand has been received and armed the HDQ Host interrupt" },
+            { ControlStatus.SHUTDN_EN, "Control bit indicating that the SET_SHUTDOWN subcommand has been sent and signals an external shutdown of the fuel gauge when conditions permit. See Section 2.4.1, SHUTDOWN Mode." },
+            { ControlStatus.HIBERNATE, "Status bit indicating a request for entry into HIBERNATE from SLEEP mode has been issued. True when set. Default is 0" },
+            { ControlStatus.FULLSLEEP, "Status bit indicating the fuel gauge is in FULLSLEEP mode. True when set. The state can be detected by monitoring the power used by the fuel gauge because any communication automatically clears it." },
+            { ControlStatus.SLEEP, "Status bit indicating the fuel gauge is in SLEEP mode. True when set." },
+            { ControlStatus.LDMD, "Status bit indicating the Impedance Track algorithm is using constant-power model. True when set. Default is 0 (constant-current model)." },
+            { ControlStatus.RUP_DIS, "Status bit indicating the Ra table updates are disabled. True when set." },
+            { ControlStatus.VOK, "Status bit indicating cell voltages are OK for Qmax updates. True when set." },
+            { ControlStatus.QEN, "Status bit indicating the Qmax updates are enabled. True when set." }
+        };
         public BatteryCheck()
         {
             InitializeComponent();
             ElemetsDefaultValue();
-            LabelDefaultValue();           
+            LabelDefaultValue();
             PortPreparation();
         }
 
-        //Заполнение полей данных прочерком
         private void LabelDefaultValue()
         {
             lblCycleCount.Text = Resources.LBL_DEFAULT_TEXT;
@@ -38,37 +63,26 @@ namespace Apple_Battery_Check
             lblHardwareVersion.Text = Resources.LBL_DEFAULT_TEXT;
         }
 
-        //Установка основных настроек для программы
         private void ElemetsDefaultValue()
         {
-            //Добавление элементов интерфесов
             cbInterface.Items.AddRange(new object[] {
             Resources.TEXT_HDQ,
             Resources.TEXT_I2C});
-            //Выбор последнего интерфейса выбранного пользователем
             cbInterface.Text = Settings.Default.INTERFACE_TYPE;
-            //Состояние сохранения считанных данных
             chbDataLog.Checked = Settings.Default.DATALOG_STATE;
-            //Установка скорости связи
             serialPortBAT.BaudRate = Settings.Default.SERIAL_BAUDRATE;
-            //Установка значка приложения
             Icon = Resources.Battery_Charging;
         }
 
-        //Подготовка и выбор порта в списке
         private void PortPreparation()
         {
-            //Заполнение массива найденными портами
             string[] ports = SerialPort.GetPortNames();
 
-            //Очистка и заполнение списка
             cbPrort.Items.Clear();
             cbPrort.Items.AddRange(ports);
 
-            //Если есть хоть один порт - выбрать его, иначе пустое поле
             cbPrort.SelectedIndex = (ports.Length != 0) ? 0 : -1;
 
-            //Активность кнопки в зависимости от наличия портов
             if (cbPrort.Text == string.Empty)
             {
                 btnRead.Enabled = false;
@@ -79,10 +93,8 @@ namespace Apple_Battery_Check
             }
         }
 
-        //Создание файла логов
         private void LogFileCreation()
         {
-            //Формирование содержимго файла логов
             string[] textData = {
                         cbInterface.Text,
                         lCycleCount.Text + Resources.SPACE_TEXT + lblCycleCount.Text,
@@ -97,11 +109,9 @@ namespace Apple_Battery_Check
                         lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text
                      };
 
-            //Создать файл логов
             File.WriteAllLines(@".\" + DateTime.Now.ToString(Resources.FILE_NAME_FORMAT) + Resources.BOT_SLASH + cbInterface.Text + Resources.EXTANSION_FORMAT, textData, Encoding.UTF8);
         }
 
-        //
         private void LabelDataAdd(string[] addData)
         {
             //STANDARD COMMANDS
@@ -117,18 +127,18 @@ namespace Apple_Battery_Check
             lblFullChargeCapacity.Text = addData[7] + Resources.SUFFIX_CAPACITY;
             lblCycleCount.Text = addData[18];
             lblStateOfCharge.Text = addData[19] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
-            
+
             // +EXTENDED COMMAND
             lblDesignCapacity.Text = addData[27] + Resources.SUFFIX_CAPACITY;
 
             //CONTROL SUB COMMANDS
-            lblControlStatus.Text = "0x"+addData[31].ToUpper();
+            lblControlStatus.Text = "0x" + addData[31].ToUpper();
             lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[32];
             lblFirmwareVersion.Text = addData[33].Insert(1, Settings.Default.SEPARATOR_DOT);
             lblHardwareVersion.Text = Convert.ToInt32(addData[34].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
 
             //BLOCK COMMANDS
-            
+
             lblManufacturerBlockA.Text = addData[36];
             lblManufacturerBlockB.Text = addData[37];
             lblManufacturerBlockC.Text = addData[38];
@@ -137,42 +147,54 @@ namespace Apple_Battery_Check
 
             ////HESAPLANAN VERİLER
             lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
-
+            UpdateBitStatus(Convert.ToUInt16(addData[31].ToUpper(),16));
 
         }
 
-        //Обновление списка портов
+        private void UpdateBitStatus(ushort receivedData)
+        {
+            flowLayoutPanel5.Controls.Clear(); // Önceki kutuları temizle
+            for (int i = 0; i <= (int)ControlStatus.QEN; i++)
+            {
+                ControlStatus bit = (ControlStatus)i;
+                bool isActive = ((receivedData >> (int)bit) & 1) != 1;
+                string labelText = bit.ToString();
+
+                Panel panel = new Panel
+                {
+                    Size = new System.Drawing.Size(90, 15),
+                    BackColor = isActive ? System.Drawing.Color.Green : System.Drawing.Color.OrangeRed,
+                    Controls = { new Label { Text = labelText, TextAlign = ContentAlignment.MiddleCenter, // Label içeriğini yatayda ortala
+                    Dock = DockStyle.Fill } }
+                };
+                flowLayoutPanel5.Controls.Add(panel);
+            }
+        }
+
         private void CbPrort_MouseClick(object sender, MouseEventArgs e)
         {
             PortPreparation();
         }
 
-        //Чтение данных из АКБ
         private void BtnRead_Click(object sender, EventArgs e)
         {
             try
             {
-                //Выбор порта
                 serialPortBAT.PortName = Convert.ToString(cbPrort.Text);
-
-                //Открыть соединение
                 serialPortBAT.Open();
 
                 if (cbInterface.Text == Resources.TEXT_HDQ)
                 {
-                    //Отправить ключ для HDQ
                     serialPortBAT.Write(Resources.KEY_HDQ);
                 }
                 else if (cbInterface.Text == Resources.TEXT_I2C)
                 {
-                    //Отправить ключ для I2C
                     serialPortBAT.Write(Resources.KEY_I2C);
                 }
             }
             catch
             {
                 serialPortBAT.Close();
-                //Сообщение об ошибке связи
                 MetroMessageBox.Show(this,
                     Messages.ERROR_RELATION,
                     Messages.ERROR,
@@ -181,22 +203,15 @@ namespace Apple_Battery_Check
             }
         }
 
-        //Делегат
         private delegate void ReceivedEvent(string data);
-
-        //Прием данных из порта
         private void SerialPortBAT_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            //Вызов метода выдачи значений через делегат 
             BeginInvoke(new ReceivedEvent(DataProcessing), serialPortBAT.ReadLine());
-
             serialPortBAT.Close();
         }
 
-        //Обработка принятых из порта данных
         private void DataProcessing(string dataReceived)
         {
-            //Разбить принятый пакет на элементы
             Console.WriteLine(dataReceived);
             string[] tempSplited = dataReceived.Split(Settings.Default.SEPARATOR_SLASH);
 
@@ -220,17 +235,12 @@ namespace Apple_Battery_Check
             }
         }
 
-        //Обработка изменений типа интерфейса и сохранения данных в файл
         private void BatteryCheck_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //При изменении типа интерфейса или флага сохранения данных
             if (cbInterface.Text != Settings.Default.INTERFACE_TYPE || chbDataLog.Checked != Settings.Default.DATALOG_STATE)
             {
-                //Переписать новое значение интефейса и флага данных
                 Settings.Default.INTERFACE_TYPE = cbInterface.Text;
                 Settings.Default.DATALOG_STATE = chbDataLog.Checked;
-
-                //Сохранить новые настройки
                 Settings.Default.Save();
             }
         }
@@ -248,9 +258,5 @@ namespace Apple_Battery_Check
             ((LedBulb)sender).Blink(_blink);
         }
 
-        private void SN1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

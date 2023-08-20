@@ -23,6 +23,15 @@ void loop() {
     else if (_serial_input == _compare_command[1]) {
       Serial.println(Battery_IIC_Data_Read());  // test
     }
+
+        // I2C protokolü ile veri okuma
+    else if (_serial_input == _compare_command[2]) {
+      while (true) {
+      Serial.println(Battery_HDQ_Data_Read_TEST());  // test
+      delay(1000);
+      }
+      
+    }
   }
   // Tamponu temizleme
   Serial.flush();
