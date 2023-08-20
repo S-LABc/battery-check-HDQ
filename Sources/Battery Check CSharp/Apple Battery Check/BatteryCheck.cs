@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+
 namespace Apple_Battery_Check
 {
     public partial class BatteryCheck : MetroForm
@@ -103,24 +104,37 @@ namespace Apple_Battery_Check
         //
         private void LabelDataAdd(string[] addData)
         {
-            //Заполнение полей пересчитанными данными
+            //STANDARD COMMANDS
             lblTemperature.Text = Convert.ToString(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET) + Resources.SUFFIX_CELSIUS_DEGREE;
+            cpbTempature.Maximum = 100;
+            cpbTempature.Minimum = 0;
+            cpbTempature.Value = Convert.ToInt32(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET);
+            cpbTempature.SubscriptText = Convert.ToString(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET);
+            cpbTempature.SuperscriptText = Resources.SUFFIX_CELSIUS_DEGREE;
+
             lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[3]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
             lblRemainingCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
             lblFullChargeCapacity.Text = addData[7] + Resources.SUFFIX_CAPACITY;
             lblCycleCount.Text = addData[18];
             lblStateOfCharge.Text = addData[19] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
             
-            //EXTENDED COMMAND
+            // +EXTENDED COMMAND
             lblDesignCapacity.Text = addData[27] + Resources.SUFFIX_CAPACITY;
+
             //CONTROL SUB COMMANDS
-            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[31];
-            lblFirmwareVersion.Text = addData[32].Insert(1, Settings.Default.SEPARATOR_DOT);
-            lblHardwareVersion.Text = Convert.ToInt32(addData[33].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
+            lblControlStatus.Text = "0x"+addData[31].ToUpper();
+            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[32];
+            lblFirmwareVersion.Text = addData[33].Insert(1, Settings.Default.SEPARATOR_DOT);
+            lblHardwareVersion.Text = Convert.ToInt32(addData[34].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
+
+            //BLOCK COMMANDS
             
-            SN1.Text = addData[35];
-            SN2.Text = addData[36];
-            SN3.Text = addData[37];
+            lblManufacturerBlockA.Text = addData[36];
+            lblManufacturerBlockB.Text = addData[37];
+            lblManufacturerBlockC.Text = addData[38];
+            lblChecksum.Text = addData[39];
+
+
             ////HESAPLANAN VERİLER
             lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
 
@@ -232,6 +246,11 @@ namespace Apple_Battery_Check
             if (_blink == 0) _blink = 500;
             else _blink = 0;
             ((LedBulb)sender).Blink(_blink);
+        }
+
+        private void SN1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
