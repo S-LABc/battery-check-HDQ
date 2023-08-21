@@ -35,12 +35,12 @@ String Battery_HDQ_Data_Read() {
     _bat_high_byte = BAT.read(0x01);
     _temp += String(word(_bat_high_byte, _bat_low_byte), HEX) + SEPARATOR_CHARACTER;
   }
-
+   
   for (uint8_t i = 0; i < sizeof(_ext_commands); i++) {
-    _temp += String(getManufacturerInfoBlock(_ext_commands[i])) + SEPARATOR_CHARACTER;
+    _temp += String(getManufacturerInfoBlock(_ext_commands[i]))+ "-"+ getBlockDataChecksum() + SEPARATOR_CHARACTER;
   }
 
-  _temp += String(getBlockDataChecksum()) + SEPARATOR_CHARACTER;
+  _temp += String(getManufacturerInfoBlock(_ext_commands[2]))+ "-"+ getBlockDataChecksum() + SEPARATOR_CHARACTER;
 
   return _temp;
 }
