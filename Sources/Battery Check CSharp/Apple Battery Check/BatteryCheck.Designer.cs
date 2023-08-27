@@ -37,6 +37,7 @@ namespace Apple_Battery_Check
             this.ledBulb1 = new Bulb.LedBulb();
             this.chbDataLog = new System.Windows.Forms.CheckBox();
             this.YT = new MetroFramework.Controls.MetroLink();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lTemperature = new System.Windows.Forms.Label();
             this.lVoltage = new System.Windows.Forms.Label();
@@ -74,16 +75,10 @@ namespace Apple_Battery_Check
             this.serialPortBAT = new System.IO.Ports.SerialPort(this.components);
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.cpbTempature = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar2 = new CircularProgressBar.CircularProgressBar();
+            this.cpbVoltage = new CircularProgressBar.CircularProgressBar();
+            this.cpbCapacity = new CircularProgressBar.CircularProgressBar();
             this.circularProgressBar3 = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar4 = new CircularProgressBar.CircularProgressBar();
             this.circularProgressBar5 = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar6 = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar7 = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar8 = new CircularProgressBar.CircularProgressBar();
-            this.circularProgressBar9 = new CircularProgressBar.CircularProgressBar();
-            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -177,6 +172,13 @@ namespace Apple_Battery_Check
             this.YT.UseSelectable = true;
             this.YT.Click += new System.EventHandler(this.YT_Click);
             // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 42);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(790, 100);
+            this.flowLayoutPanel5.TabIndex = 13;
+            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.lTemperature);
@@ -186,6 +188,7 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel2.Controls.Add(this.lDesignCapacity);
             this.flowLayoutPanel2.Controls.Add(this.lCycleCount);
             this.flowLayoutPanel2.Controls.Add(this.lStateOfCharge);
+            this.flowLayoutPanel2.Controls.Add(this.lBatteryHealth);
             this.flowLayoutPanel2.Controls.Add(this.lDeviceType);
             this.flowLayoutPanel2.Controls.Add(this.lControlStatus);
             this.flowLayoutPanel2.Controls.Add(this.lFirmwareVersion);
@@ -193,7 +196,6 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel2.Controls.Add(this.lManufacturerBlockA);
             this.flowLayoutPanel2.Controls.Add(this.lManufacturerBlockB);
             this.flowLayoutPanel2.Controls.Add(this.lManufacturerBlockC);
-            this.flowLayoutPanel2.Controls.Add(this.lBatteryHealth);
             this.flowLayoutPanel2.Controls.Add(this.lChecksum);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -291,7 +293,7 @@ namespace Apple_Battery_Check
             // 
             this.lDeviceType.AutoSize = true;
             this.lDeviceType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lDeviceType.Location = new System.Drawing.Point(5, 255);
+            this.lDeviceType.Location = new System.Drawing.Point(5, 290);
             this.lDeviceType.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lDeviceType.Name = "lDeviceType";
             this.lDeviceType.Size = new System.Drawing.Size(72, 20);
@@ -303,7 +305,7 @@ namespace Apple_Battery_Check
             // 
             this.lControlStatus.AutoSize = true;
             this.lControlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lControlStatus.Location = new System.Drawing.Point(5, 290);
+            this.lControlStatus.Location = new System.Drawing.Point(5, 325);
             this.lControlStatus.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lControlStatus.Name = "lControlStatus";
             this.lControlStatus.Size = new System.Drawing.Size(111, 20);
@@ -315,7 +317,7 @@ namespace Apple_Battery_Check
             // 
             this.lFirmwareVersion.AutoSize = true;
             this.lFirmwareVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lFirmwareVersion.Location = new System.Drawing.Point(5, 325);
+            this.lFirmwareVersion.Location = new System.Drawing.Point(5, 360);
             this.lFirmwareVersion.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lFirmwareVersion.Name = "lFirmwareVersion";
             this.lFirmwareVersion.Size = new System.Drawing.Size(119, 20);
@@ -327,7 +329,7 @@ namespace Apple_Battery_Check
             // 
             this.lHardwareVersion.AutoSize = true;
             this.lHardwareVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lHardwareVersion.Location = new System.Drawing.Point(5, 360);
+            this.lHardwareVersion.Location = new System.Drawing.Point(5, 395);
             this.lHardwareVersion.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lHardwareVersion.Name = "lHardwareVersion";
             this.lHardwareVersion.Size = new System.Drawing.Size(133, 20);
@@ -339,7 +341,7 @@ namespace Apple_Battery_Check
             // 
             this.lManufacturerBlockA.AutoSize = true;
             this.lManufacturerBlockA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lManufacturerBlockA.Location = new System.Drawing.Point(5, 395);
+            this.lManufacturerBlockA.Location = new System.Drawing.Point(5, 430);
             this.lManufacturerBlockA.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lManufacturerBlockA.Name = "lManufacturerBlockA";
             this.lManufacturerBlockA.Size = new System.Drawing.Size(162, 20);
@@ -351,7 +353,7 @@ namespace Apple_Battery_Check
             // 
             this.lManufacturerBlockB.AutoSize = true;
             this.lManufacturerBlockB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lManufacturerBlockB.Location = new System.Drawing.Point(5, 430);
+            this.lManufacturerBlockB.Location = new System.Drawing.Point(5, 465);
             this.lManufacturerBlockB.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lManufacturerBlockB.Name = "lManufacturerBlockB";
             this.lManufacturerBlockB.Size = new System.Drawing.Size(162, 20);
@@ -363,7 +365,7 @@ namespace Apple_Battery_Check
             // 
             this.lManufacturerBlockC.AutoSize = true;
             this.lManufacturerBlockC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lManufacturerBlockC.Location = new System.Drawing.Point(5, 465);
+            this.lManufacturerBlockC.Location = new System.Drawing.Point(5, 500);
             this.lManufacturerBlockC.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lManufacturerBlockC.Name = "lManufacturerBlockC";
             this.lManufacturerBlockC.Size = new System.Drawing.Size(162, 20);
@@ -375,7 +377,7 @@ namespace Apple_Battery_Check
             // 
             this.lBatteryHealth.AutoSize = true;
             this.lBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lBatteryHealth.Location = new System.Drawing.Point(5, 500);
+            this.lBatteryHealth.Location = new System.Drawing.Point(5, 255);
             this.lBatteryHealth.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lBatteryHealth.Name = "lBatteryHealth";
             this.lBatteryHealth.Size = new System.Drawing.Size(76, 20);
@@ -404,6 +406,7 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel3.Controls.Add(this.lblDesignCapacity);
             this.flowLayoutPanel3.Controls.Add(this.lblCycleCount);
             this.flowLayoutPanel3.Controls.Add(this.lblStateOfCharge);
+            this.flowLayoutPanel3.Controls.Add(this.lblBatteryHealth);
             this.flowLayoutPanel3.Controls.Add(this.lblDeviceType);
             this.flowLayoutPanel3.Controls.Add(this.lblControlStatus);
             this.flowLayoutPanel3.Controls.Add(this.lblFirmwareVersion);
@@ -411,7 +414,6 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel3.Controls.Add(this.lblManufacturerBlockA);
             this.flowLayoutPanel3.Controls.Add(this.lblManufacturerBlockB);
             this.flowLayoutPanel3.Controls.Add(this.lblManufacturerBlockC);
-            this.flowLayoutPanel3.Controls.Add(this.lblBatteryHealth);
             this.flowLayoutPanel3.Controls.Add(this.lblChecksum);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -508,7 +510,7 @@ namespace Apple_Battery_Check
             // 
             this.lblDeviceType.AutoSize = true;
             this.lblDeviceType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblDeviceType.Location = new System.Drawing.Point(5, 255);
+            this.lblDeviceType.Location = new System.Drawing.Point(5, 290);
             this.lblDeviceType.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblDeviceType.Name = "lblDeviceType";
             this.lblDeviceType.Size = new System.Drawing.Size(33, 20);
@@ -520,7 +522,7 @@ namespace Apple_Battery_Check
             // 
             this.lblControlStatus.AutoSize = true;
             this.lblControlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblControlStatus.Location = new System.Drawing.Point(5, 290);
+            this.lblControlStatus.Location = new System.Drawing.Point(5, 325);
             this.lblControlStatus.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblControlStatus.Name = "lblControlStatus";
             this.lblControlStatus.Size = new System.Drawing.Size(33, 20);
@@ -532,7 +534,7 @@ namespace Apple_Battery_Check
             // 
             this.lblFirmwareVersion.AutoSize = true;
             this.lblFirmwareVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFirmwareVersion.Location = new System.Drawing.Point(5, 325);
+            this.lblFirmwareVersion.Location = new System.Drawing.Point(5, 360);
             this.lblFirmwareVersion.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblFirmwareVersion.Name = "lblFirmwareVersion";
             this.lblFirmwareVersion.Size = new System.Drawing.Size(33, 20);
@@ -544,7 +546,7 @@ namespace Apple_Battery_Check
             // 
             this.lblHardwareVersion.AutoSize = true;
             this.lblHardwareVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHardwareVersion.Location = new System.Drawing.Point(5, 360);
+            this.lblHardwareVersion.Location = new System.Drawing.Point(5, 395);
             this.lblHardwareVersion.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblHardwareVersion.Name = "lblHardwareVersion";
             this.lblHardwareVersion.Size = new System.Drawing.Size(33, 20);
@@ -556,7 +558,7 @@ namespace Apple_Battery_Check
             // 
             this.lblManufacturerBlockA.AutoSize = true;
             this.lblManufacturerBlockA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblManufacturerBlockA.Location = new System.Drawing.Point(5, 395);
+            this.lblManufacturerBlockA.Location = new System.Drawing.Point(5, 430);
             this.lblManufacturerBlockA.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblManufacturerBlockA.Name = "lblManufacturerBlockA";
             this.lblManufacturerBlockA.Size = new System.Drawing.Size(33, 20);
@@ -568,7 +570,7 @@ namespace Apple_Battery_Check
             // 
             this.lblManufacturerBlockB.AutoSize = true;
             this.lblManufacturerBlockB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblManufacturerBlockB.Location = new System.Drawing.Point(5, 430);
+            this.lblManufacturerBlockB.Location = new System.Drawing.Point(5, 465);
             this.lblManufacturerBlockB.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblManufacturerBlockB.Name = "lblManufacturerBlockB";
             this.lblManufacturerBlockB.Size = new System.Drawing.Size(33, 20);
@@ -580,7 +582,7 @@ namespace Apple_Battery_Check
             // 
             this.lblManufacturerBlockC.AutoSize = true;
             this.lblManufacturerBlockC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblManufacturerBlockC.Location = new System.Drawing.Point(5, 465);
+            this.lblManufacturerBlockC.Location = new System.Drawing.Point(5, 500);
             this.lblManufacturerBlockC.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblManufacturerBlockC.Name = "lblManufacturerBlockC";
             this.lblManufacturerBlockC.Size = new System.Drawing.Size(33, 20);
@@ -592,7 +594,7 @@ namespace Apple_Battery_Check
             // 
             this.lblBatteryHealth.AutoSize = true;
             this.lblBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblBatteryHealth.Location = new System.Drawing.Point(5, 500);
+            this.lblBatteryHealth.Location = new System.Drawing.Point(5, 255);
             this.lblBatteryHealth.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.lblBatteryHealth.Name = "lblBatteryHealth";
             this.lblBatteryHealth.Size = new System.Drawing.Size(33, 20);
@@ -619,15 +621,10 @@ namespace Apple_Battery_Check
             // flowLayoutPanel4
             // 
             this.flowLayoutPanel4.Controls.Add(this.cpbTempature);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar1);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar2);
+            this.flowLayoutPanel4.Controls.Add(this.cpbVoltage);
+            this.flowLayoutPanel4.Controls.Add(this.cpbCapacity);
             this.flowLayoutPanel4.Controls.Add(this.circularProgressBar3);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar4);
             this.flowLayoutPanel4.Controls.Add(this.circularProgressBar5);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar6);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar7);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar8);
-            this.flowLayoutPanel4.Controls.Add(this.circularProgressBar9);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Right;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(585, 70);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
@@ -653,82 +650,82 @@ namespace Apple_Battery_Check
             this.cpbTempature.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.cpbTempature.ProgressWidth = 15;
             this.cpbTempature.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.cpbTempature.Size = new System.Drawing.Size(100, 100);
+            this.cpbTempature.Size = new System.Drawing.Size(150, 150);
             this.cpbTempature.StartAngle = 270;
             this.cpbTempature.SubscriptColor = System.Drawing.Color.Red;
             this.cpbTempature.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbTempature.SubscriptText = ".23";
+            this.cpbTempature.SubscriptText = "";
             this.cpbTempature.SuperscriptColor = System.Drawing.Color.Red;
             this.cpbTempature.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbTempature.SuperscriptText = "°C";
+            this.cpbTempature.SuperscriptText = "";
             this.cpbTempature.TabIndex = 0;
-            this.cpbTempature.Text = "Sıcaklık";
+            this.cpbTempature.Text = "Tempature";
             this.cpbTempature.TextMargin = new System.Windows.Forms.Padding(0);
             this.cpbTempature.Value = 1;
             // 
-            // circularProgressBar1
+            // cpbVoltage
             // 
-            this.circularProgressBar1.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar1.AnimationSpeed = 500;
-            this.circularProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar1.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar1.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar1.InnerMargin = 1;
-            this.circularProgressBar1.InnerWidth = -1;
-            this.circularProgressBar1.Location = new System.Drawing.Point(109, 3);
-            this.circularProgressBar1.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar1.Name = "circularProgressBar1";
-            this.circularProgressBar1.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar1.OuterMargin = -15;
-            this.circularProgressBar1.OuterWidth = 15;
-            this.circularProgressBar1.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar1.ProgressWidth = 15;
-            this.circularProgressBar1.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar1.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar1.StartAngle = 270;
-            this.circularProgressBar1.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar1.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar1.SubscriptText = ".23";
-            this.circularProgressBar1.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar1.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar1.SuperscriptText = "°C";
-            this.circularProgressBar1.TabIndex = 1;
-            this.circularProgressBar1.Text = "Sıcaklık";
-            this.circularProgressBar1.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar1.Value = 1;
+            this.cpbVoltage.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbVoltage.AnimationSpeed = 500;
+            this.cpbVoltage.BackColor = System.Drawing.Color.Transparent;
+            this.cpbVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbVoltage.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbVoltage.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbVoltage.InnerMargin = 1;
+            this.cpbVoltage.InnerWidth = -1;
+            this.cpbVoltage.Location = new System.Drawing.Point(3, 159);
+            this.cpbVoltage.MarqueeAnimationSpeed = 2000;
+            this.cpbVoltage.Name = "cpbVoltage";
+            this.cpbVoltage.OuterColor = System.Drawing.Color.Gray;
+            this.cpbVoltage.OuterMargin = -15;
+            this.cpbVoltage.OuterWidth = 15;
+            this.cpbVoltage.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbVoltage.ProgressWidth = 15;
+            this.cpbVoltage.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbVoltage.Size = new System.Drawing.Size(150, 150);
+            this.cpbVoltage.StartAngle = 270;
+            this.cpbVoltage.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbVoltage.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbVoltage.SubscriptText = "";
+            this.cpbVoltage.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbVoltage.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbVoltage.SuperscriptText = "";
+            this.cpbVoltage.TabIndex = 1;
+            this.cpbVoltage.Text = "Voltage";
+            this.cpbVoltage.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbVoltage.Value = 1;
             // 
-            // circularProgressBar2
+            // cpbCapacity
             // 
-            this.circularProgressBar2.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar2.AnimationSpeed = 500;
-            this.circularProgressBar2.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar2.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar2.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar2.InnerMargin = 1;
-            this.circularProgressBar2.InnerWidth = -1;
-            this.circularProgressBar2.Location = new System.Drawing.Point(3, 109);
-            this.circularProgressBar2.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar2.Name = "circularProgressBar2";
-            this.circularProgressBar2.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar2.OuterMargin = -15;
-            this.circularProgressBar2.OuterWidth = 15;
-            this.circularProgressBar2.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar2.ProgressWidth = 15;
-            this.circularProgressBar2.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar2.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar2.StartAngle = 270;
-            this.circularProgressBar2.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar2.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar2.SubscriptText = ".23";
-            this.circularProgressBar2.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar2.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar2.SuperscriptText = "°C";
-            this.circularProgressBar2.TabIndex = 2;
-            this.circularProgressBar2.Text = "Sıcaklık";
-            this.circularProgressBar2.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar2.Value = 1;
+            this.cpbCapacity.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbCapacity.AnimationSpeed = 500;
+            this.cpbCapacity.BackColor = System.Drawing.Color.Transparent;
+            this.cpbCapacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbCapacity.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbCapacity.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbCapacity.InnerMargin = 1;
+            this.cpbCapacity.InnerWidth = -1;
+            this.cpbCapacity.Location = new System.Drawing.Point(3, 315);
+            this.cpbCapacity.MarqueeAnimationSpeed = 2000;
+            this.cpbCapacity.Name = "cpbCapacity";
+            this.cpbCapacity.OuterColor = System.Drawing.Color.Gray;
+            this.cpbCapacity.OuterMargin = -15;
+            this.cpbCapacity.OuterWidth = 15;
+            this.cpbCapacity.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbCapacity.ProgressWidth = 15;
+            this.cpbCapacity.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbCapacity.Size = new System.Drawing.Size(150, 150);
+            this.cpbCapacity.StartAngle = 270;
+            this.cpbCapacity.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbCapacity.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbCapacity.SubscriptText = "";
+            this.cpbCapacity.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbCapacity.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbCapacity.SuperscriptText = "";
+            this.cpbCapacity.TabIndex = 2;
+            this.cpbCapacity.Text = "Capacity";
+            this.cpbCapacity.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbCapacity.Value = 1;
             // 
             // circularProgressBar3
             // 
@@ -740,7 +737,7 @@ namespace Apple_Battery_Check
             this.circularProgressBar3.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.circularProgressBar3.InnerMargin = 1;
             this.circularProgressBar3.InnerWidth = -1;
-            this.circularProgressBar3.Location = new System.Drawing.Point(109, 109);
+            this.circularProgressBar3.Location = new System.Drawing.Point(3, 471);
             this.circularProgressBar3.MarqueeAnimationSpeed = 2000;
             this.circularProgressBar3.Name = "circularProgressBar3";
             this.circularProgressBar3.OuterColor = System.Drawing.Color.Gray;
@@ -762,38 +759,6 @@ namespace Apple_Battery_Check
             this.circularProgressBar3.TextMargin = new System.Windows.Forms.Padding(0);
             this.circularProgressBar3.Value = 1;
             // 
-            // circularProgressBar4
-            // 
-            this.circularProgressBar4.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar4.AnimationSpeed = 500;
-            this.circularProgressBar4.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar4.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar4.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar4.InnerMargin = 1;
-            this.circularProgressBar4.InnerWidth = -1;
-            this.circularProgressBar4.Location = new System.Drawing.Point(3, 215);
-            this.circularProgressBar4.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar4.Name = "circularProgressBar4";
-            this.circularProgressBar4.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar4.OuterMargin = -15;
-            this.circularProgressBar4.OuterWidth = 15;
-            this.circularProgressBar4.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar4.ProgressWidth = 15;
-            this.circularProgressBar4.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar4.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar4.StartAngle = 270;
-            this.circularProgressBar4.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar4.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar4.SubscriptText = ".23";
-            this.circularProgressBar4.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar4.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar4.SuperscriptText = "°C";
-            this.circularProgressBar4.TabIndex = 4;
-            this.circularProgressBar4.Text = "Sıcaklık";
-            this.circularProgressBar4.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar4.Value = 1;
-            // 
             // circularProgressBar5
             // 
             this.circularProgressBar5.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
@@ -804,7 +769,7 @@ namespace Apple_Battery_Check
             this.circularProgressBar5.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.circularProgressBar5.InnerMargin = 1;
             this.circularProgressBar5.InnerWidth = -1;
-            this.circularProgressBar5.Location = new System.Drawing.Point(109, 215);
+            this.circularProgressBar5.Location = new System.Drawing.Point(109, 471);
             this.circularProgressBar5.MarqueeAnimationSpeed = 2000;
             this.circularProgressBar5.Name = "circularProgressBar5";
             this.circularProgressBar5.OuterColor = System.Drawing.Color.Gray;
@@ -825,141 +790,6 @@ namespace Apple_Battery_Check
             this.circularProgressBar5.Text = "Sıcaklık";
             this.circularProgressBar5.TextMargin = new System.Windows.Forms.Padding(0);
             this.circularProgressBar5.Value = 1;
-            // 
-            // circularProgressBar6
-            // 
-            this.circularProgressBar6.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar6.AnimationSpeed = 500;
-            this.circularProgressBar6.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar6.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar6.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar6.InnerMargin = 1;
-            this.circularProgressBar6.InnerWidth = -1;
-            this.circularProgressBar6.Location = new System.Drawing.Point(3, 321);
-            this.circularProgressBar6.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar6.Name = "circularProgressBar6";
-            this.circularProgressBar6.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar6.OuterMargin = -15;
-            this.circularProgressBar6.OuterWidth = 15;
-            this.circularProgressBar6.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar6.ProgressWidth = 15;
-            this.circularProgressBar6.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar6.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar6.StartAngle = 270;
-            this.circularProgressBar6.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar6.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar6.SubscriptText = ".23";
-            this.circularProgressBar6.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar6.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar6.SuperscriptText = "°C";
-            this.circularProgressBar6.TabIndex = 6;
-            this.circularProgressBar6.Text = "Sıcaklık";
-            this.circularProgressBar6.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar6.Value = 1;
-            // 
-            // circularProgressBar7
-            // 
-            this.circularProgressBar7.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar7.AnimationSpeed = 500;
-            this.circularProgressBar7.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar7.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar7.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar7.InnerMargin = 1;
-            this.circularProgressBar7.InnerWidth = -1;
-            this.circularProgressBar7.Location = new System.Drawing.Point(109, 321);
-            this.circularProgressBar7.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar7.Name = "circularProgressBar7";
-            this.circularProgressBar7.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar7.OuterMargin = -15;
-            this.circularProgressBar7.OuterWidth = 15;
-            this.circularProgressBar7.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar7.ProgressWidth = 15;
-            this.circularProgressBar7.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar7.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar7.StartAngle = 270;
-            this.circularProgressBar7.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar7.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar7.SubscriptText = ".23";
-            this.circularProgressBar7.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar7.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar7.SuperscriptText = "°C";
-            this.circularProgressBar7.TabIndex = 7;
-            this.circularProgressBar7.Text = "Sıcaklık";
-            this.circularProgressBar7.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar7.Value = 1;
-            // 
-            // circularProgressBar8
-            // 
-            this.circularProgressBar8.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar8.AnimationSpeed = 500;
-            this.circularProgressBar8.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar8.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar8.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar8.InnerMargin = 1;
-            this.circularProgressBar8.InnerWidth = -1;
-            this.circularProgressBar8.Location = new System.Drawing.Point(3, 427);
-            this.circularProgressBar8.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar8.Name = "circularProgressBar8";
-            this.circularProgressBar8.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar8.OuterMargin = -15;
-            this.circularProgressBar8.OuterWidth = 15;
-            this.circularProgressBar8.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar8.ProgressWidth = 15;
-            this.circularProgressBar8.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar8.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar8.StartAngle = 270;
-            this.circularProgressBar8.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar8.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar8.SubscriptText = ".23";
-            this.circularProgressBar8.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar8.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar8.SuperscriptText = "°C";
-            this.circularProgressBar8.TabIndex = 8;
-            this.circularProgressBar8.Text = "Sıcaklık";
-            this.circularProgressBar8.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar8.Value = 1;
-            // 
-            // circularProgressBar9
-            // 
-            this.circularProgressBar9.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar9.AnimationSpeed = 500;
-            this.circularProgressBar9.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.circularProgressBar9.ForeColor = System.Drawing.Color.DarkCyan;
-            this.circularProgressBar9.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.circularProgressBar9.InnerMargin = 1;
-            this.circularProgressBar9.InnerWidth = -1;
-            this.circularProgressBar9.Location = new System.Drawing.Point(109, 427);
-            this.circularProgressBar9.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar9.Name = "circularProgressBar9";
-            this.circularProgressBar9.OuterColor = System.Drawing.Color.Gray;
-            this.circularProgressBar9.OuterMargin = -15;
-            this.circularProgressBar9.OuterWidth = 15;
-            this.circularProgressBar9.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.circularProgressBar9.ProgressWidth = 15;
-            this.circularProgressBar9.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar9.Size = new System.Drawing.Size(100, 100);
-            this.circularProgressBar9.StartAngle = 270;
-            this.circularProgressBar9.SubscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar9.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar9.SubscriptText = ".23";
-            this.circularProgressBar9.SuperscriptColor = System.Drawing.Color.Red;
-            this.circularProgressBar9.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar9.SuperscriptText = "°C";
-            this.circularProgressBar9.TabIndex = 9;
-            this.circularProgressBar9.Text = "Sıcaklık";
-            this.circularProgressBar9.TextMargin = new System.Windows.Forms.Padding(0);
-            this.circularProgressBar9.Value = 1;
-            // 
-            // flowLayoutPanel5
-            // 
-            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 42);
-            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(790, 100);
-            this.flowLayoutPanel5.TabIndex = 13;
             // 
             // BatteryCheck
             // 
@@ -1037,15 +867,10 @@ namespace Apple_Battery_Check
         private System.Windows.Forms.Label lblChecksum;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private CircularProgressBar.CircularProgressBar cpbTempature;
-        private CircularProgressBar.CircularProgressBar circularProgressBar1;
-        private CircularProgressBar.CircularProgressBar circularProgressBar2;
+        private CircularProgressBar.CircularProgressBar cpbVoltage;
+        private CircularProgressBar.CircularProgressBar cpbCapacity;
         private CircularProgressBar.CircularProgressBar circularProgressBar3;
-        private CircularProgressBar.CircularProgressBar circularProgressBar4;
         private CircularProgressBar.CircularProgressBar circularProgressBar5;
-        private CircularProgressBar.CircularProgressBar circularProgressBar6;
-        private CircularProgressBar.CircularProgressBar circularProgressBar7;
-        private CircularProgressBar.CircularProgressBar circularProgressBar8;
-        private CircularProgressBar.CircularProgressBar circularProgressBar9;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
     }
 }

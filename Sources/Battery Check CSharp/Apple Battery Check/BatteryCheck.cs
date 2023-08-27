@@ -20,6 +20,7 @@ namespace Apple_Battery_Check
         SE_EN, FAS, SS, CALMODE, CCA, BCA, QMAXUPDATE, HOSTIE,
         SHUTDN_EN, HIBERNATE, FULLSLEEP, SLEEP, LDMD, RUP_DIS, VOK, QEN
     }
+
     public partial class BatteryCheck : MetroForm
     {
         private Dictionary<ControlStatus, string> ControlStatusDescriptions = new Dictionary<ControlStatus, string>
@@ -41,6 +42,7 @@ namespace Apple_Battery_Check
             { ControlStatus.VOK, "Status bit indicating cell voltages are OK for Qmax updates. True when set." },
             { ControlStatus.QEN, "Status bit indicating the Qmax updates are enabled. True when set." }
         };
+        public BatteryPack batteryPack = new BatteryPack();
         public BatteryCheck()
         {
             InitializeComponent();
@@ -115,39 +117,54 @@ namespace Apple_Battery_Check
         private void LabelDataAdd(string[] addData)
         {
             //STANDARD COMMANDS
-            lblTemperature.Text = Convert.ToString(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET) + Resources.SUFFIX_CELSIUS_DEGREE;
-            cpbTempature.Maximum = 100;
-            cpbTempature.Minimum = 0;
-            cpbTempature.Value = Convert.ToInt32(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET);
-            cpbTempature.SubscriptText = Convert.ToString(Convert.ToDouble(addData[2]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET);
-            cpbTempature.SuperscriptText = Resources.SUFFIX_CELSIUS_DEGREE;
+            lblTemperature.Text = batteryPack.TemperatureCelsius + Resources.SUFFIX_CELSIUS_DEGREE;
+            cpbTempature.Value = Convert.ToInt32(batteryPack.TemperatureCelsius);
+            cpbTempature.SubscriptText = batteryPack.TemperatureCelsius + Resources.SUFFIX_CELSIUS_DEGREE;
+            cpbTempature.SuperscriptText = batteryPack.TemperatureFahrenheit + " F";// TODO
 
-            lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[3]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
-            lblRemainingCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
-            lblFullChargeCapacity.Text = addData[7] + Resources.SUFFIX_CAPACITY;
-            lblCycleCount.Text = addData[18];
-            lblStateOfCharge.Text = addData[19] + Resources.SUFFIX_PERCENT; // NEYE GÖRE HESAPLIYOR ENTEGRE BAK
+            lblVoltage.Text = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
+            cpbVoltage.Minimum = 3200;
+            cpbVoltage.Maximum = 4400;
+            cpbVoltage.Value = Convert.ToInt32(batteryPack.Voltage);//hack
+            cpbVoltage.SubscriptText = batteryPack.Voltage + " mV";
+            cpbVoltage.SuperscriptText = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
+
+
+            lblRemainingCapacity.Text = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
+            lblFullChargeCapacity.Text = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
+            cpbCapacity.Minimum = 0;
+            cpbCapacity.Maximum = batteryPack.FullChargeCapacity;
+            cpbCapacity.Value = Convert.ToInt32(batteryPack.RemainingCapacity);
+            cpbCapacity.SubscriptText = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
+            cpbCapacity.SuperscriptText = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
+
+
+            lblCycleCount.Text =  batteryPack.CycleCount;
+            lblStateOfCharge.Text = batteryPack.StateOfCharge + Resources.SUFFIX_PERCENT;
+            lblBatteryHealth.Text = batteryPack.StateOfHealth + Resources.SUFFIX_PERCENT;
 
             // +EXTENDED COMMAND
-            lblDesignCapacity.Text = addData[27] + Resources.SUFFIX_CAPACITY;
+            lblDesignCapacity.Text = batteryPack.DesignCapacity + Resources.SUFFIX_CAPACITY;
 
             //CONTROL SUB COMMANDS
-            lblControlStatus.Text = "0x" + addData[31].ToUpper();
-            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[32];
-            lblFirmwareVersion.Text = addData[33].Insert(1, Settings.Default.SEPARATOR_DOT);
-            lblHardwareVersion.Text = Convert.ToInt32(addData[34].ToUpper(), 16).ToString().Insert(1, Settings.Default.SEPARATOR_DOT);
+            lblControlStatus.Text = "0x" + batteryPack.ControlStatus;
+            lblDeviceType.Text = batteryPack.DeviceType;
+            lblFirmwareVersion.Text = batteryPack.FirmwareVersion;
+            lblHardwareVersion.Text = batteryPack.HardwareVersion;
 
             //BLOCK COMMANDS
 
-            lblManufacturerBlockA.Text = addData[36];
-            lblManufacturerBlockB.Text = addData[37];
-            lblManufacturerBlockC.Text = addData[38];
-            lblChecksum.Text = addData[39];
+            lblManufacturerBlockA.Text = batteryPack.ManufacturerBlockA;
+            lblManufacturerBlockB.Text = batteryPack.ManufacturerBlockB;
+            lblManufacturerBlockC.Text = batteryPack.ManufacturerBlockC;
+            lblChecksum.Text = batteryPack.Checksum;
 
 
             ////HESAPLANAN VERİLER
-            lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
-            UpdateBitStatus(Convert.ToUInt16(addData[31].ToUpper(),16));
+            //lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
+            
+
+            UpdateBitStatus(Convert.ToUInt16(addData[31].ToUpper(), 16));
 
         }
 
@@ -214,7 +231,7 @@ namespace Apple_Battery_Check
         {
             Console.WriteLine(dataReceived);
             string[] tempSplited = dataReceived.Split(Settings.Default.SEPARATOR_SLASH);
-
+            batteryPack.UpdateData(dataReceived);
             try
             {
                 LabelDataAdd(tempSplited);

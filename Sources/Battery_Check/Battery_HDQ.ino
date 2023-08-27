@@ -40,10 +40,10 @@ String Battery_HDQ_Data_Read() {
   }
 
   for (uint8_t i = 0; i < sizeof(_ext_commands); i++) {
-    _temp += String(getManufacturerInfoBlock(_ext_commands[i])) + "-" + BAT.read(0x60) + SEPARATOR_CHARACTER;
+    _temp += String(getManufacturerInfoBlock(_ext_commands[i])) + SEPARATOR_CHARACTER;
   }
 
-  _temp += String(getManufacturerInfoBlock(_ext_commands[2])) + "-" + BAT.read(0x60) + SEPARATOR_CHARACTER;
+  _temp += String(getManufacturerInfoBlock(_ext_commands[2]))  + SEPARATOR_CHARACTER;
 
   return _temp;
 }
@@ -135,7 +135,7 @@ String Battery_HDQ_Data_Read_TEST() {
   // Standard Commands StateOfHealth()
   _temp += "Read SOH:";
   _bat_low_byte = BAT.read(0x2E);
-  _bat_high_byte = BAT.read(0x2B);
+  _bat_high_byte = BAT.read(0x2F);
   _temp += String(word(_bat_high_byte, _bat_low_byte)) + "\n";
 
   // Standard Commands ChargingCurrent()
@@ -177,8 +177,8 @@ String Battery_HDQ_Data_Read_TEST() {
 
   BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x00);  // 5.1.1 Accessing The Data Flash
   pushBlockData(_auth_data, 0x40, 0x53);
-  _temp += "HASH c: " + String(calculateEightBitSum(_auth_data), HEX) + "\n";;
-  _temp += "HASH b: " + String(BAT.read(0x53), HEX) + "\n";
+  _temp += "HASH A: " + String(calculateEightBitSum(_auth_data), HEX) + "\n";;
+  _temp += "HASH B: " + String(BAT.read(0x53), HEX) + "\n";
 
 
 
