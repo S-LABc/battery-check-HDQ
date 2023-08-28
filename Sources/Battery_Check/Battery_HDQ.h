@@ -42,10 +42,11 @@
 #define EXTD_CMD_DATA_FLASH_BLOCK 0x3F // "Ofset" veri 32 bayttan kücükse blok numarası yazılır. büyükse kaçıcı blok olduğu yazılır.
 
 #define EXTD_CMD_BLOCK_DATA_CHECKSUM 0x60 // Yazılacak verinin Bit Sağlama Toplamı Bu registere yazılır.
-#define EXTD_CMD_BLOCK_DATA_CONTROL 0x61 // SEAL UNSEAL INFO
+#define EXTD_CMD_BLOCK_DATA_CONTROL 0x61 // unsealed yetkilendirme işlemleri icindir
 #define EXTD_CMD_BLOCK_DATA_L 0x40 // Veri ilk baytı
 #define EXTD_CMD_BLOCK_DATA_H 0x5f // Veri son baytı
 
+//0x00 burada sealed yetkilendirme işlemleri icindir 123 bloklarda uretici bloklarıdır
 #define EXTD_CMD_MANUFACTURE_BLOCK_A_B_C \
   { 0x01, 0x02, 0x03 }
 

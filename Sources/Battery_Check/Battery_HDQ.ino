@@ -70,19 +70,7 @@ char* getManufacturerInfoBlock(byte payload) {
   pullBlockData(_block_data, EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H);
   return (char*)_block_data;
 }
-void Unseal(void) {
-  // Default Full-Access Key: 0x36720414 (Little-Endian: Key 1 - 0x0414, Key 0 - 0x3672)
-  byte unsealKey[] = { 0x14, 0x04, 0x72, 0x36 };
-  // ADRESLER YANLIŞ DÜZELTECEĞİZ PUSHDATA İLE SECURTY DATA CLASSA GIDECEK
-  BAT.write(0x00, unsealKey[0]);
-  BAT.write(0x01, unsealKey[1]);
-  BAT.write(0x00, unsealKey[2]);
-  BAT.write(0x01, unsealKey[3]);
-  BAT.write(0x00, 0xFF);
-  BAT.write(0x01, 0xFF);
-  BAT.write(0x00, 0xFF);
-  BAT.write(0x01, 0xFF);
-}
+
 
 uint8_t calculate_lsb_checksum(const uint8_t* data) {
   size_t size = sizeof(data);
@@ -169,6 +157,8 @@ String Battery_HDQ_Data_Read_TEST() {
   _temp += "\n";
 
   // 3.4 Executing an Authentication Query
+  // 5.1.1 Accessing The Data Flash
+  // 5.9 Security Class
   // Yetkilendirme UNSEALED: BlockDataControl()(0x61) register a 0x01 yazarsan yetkili işleme girer.
   // Yetkilendirme SEALED: DataFlashBlock()(0x3F) register a 0x00 yazarsan yetkili işleme girer.
   // Sonra 20-byte yetkilendirme kodu Authenticate() adresine yani (0x40)'tan (0x53)'e kadar olan adrese gönderilir.
@@ -183,4 +173,17 @@ String Battery_HDQ_Data_Read_TEST() {
 
 
   return _temp;
+}
+void Unseal(void) {
+  // Default Full-Access Key: 0x36720414 (Little-Endian: Key 1 - 0x0414, Key 0 - 0x3672)
+  byte unsealKey[] = { 0x14, 0x04, 0x72, 0x36 };
+  // ADRESLER YANLIŞ DÜZELTECEĞİZ PUSHDATA İLE SECURTY DATA CLASSA GIDECEK
+  BAT.write(0x00, unsealKey[0]);
+  BAT.write(0x01, unsealKey[1]);
+  BAT.write(0x00, unsealKey[2]);
+  BAT.write(0x01, unsealKey[3]);
+  BAT.write(0x00, 0xFF);
+  BAT.write(0x01, 0xFF);
+  BAT.write(0x00, 0xFF);
+  BAT.write(0x01, 0xFF);
 }

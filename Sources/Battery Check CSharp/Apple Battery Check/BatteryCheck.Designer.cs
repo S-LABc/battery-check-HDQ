@@ -46,6 +46,7 @@ namespace Apple_Battery_Check
             this.lDesignCapacity = new System.Windows.Forms.Label();
             this.lCycleCount = new System.Windows.Forms.Label();
             this.lStateOfCharge = new System.Windows.Forms.Label();
+            this.lBatteryHealth = new System.Windows.Forms.Label();
             this.lDeviceType = new System.Windows.Forms.Label();
             this.lControlStatus = new System.Windows.Forms.Label();
             this.lFirmwareVersion = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@ namespace Apple_Battery_Check
             this.lManufacturerBlockA = new System.Windows.Forms.Label();
             this.lManufacturerBlockB = new System.Windows.Forms.Label();
             this.lManufacturerBlockC = new System.Windows.Forms.Label();
-            this.lBatteryHealth = new System.Windows.Forms.Label();
             this.lChecksum = new System.Windows.Forms.Label();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblTemperature = new System.Windows.Forms.Label();
@@ -63,6 +63,7 @@ namespace Apple_Battery_Check
             this.lblDesignCapacity = new System.Windows.Forms.Label();
             this.lblCycleCount = new System.Windows.Forms.Label();
             this.lblStateOfCharge = new System.Windows.Forms.Label();
+            this.lblBatteryHealth = new System.Windows.Forms.Label();
             this.lblDeviceType = new System.Windows.Forms.Label();
             this.lblControlStatus = new System.Windows.Forms.Label();
             this.lblFirmwareVersion = new System.Windows.Forms.Label();
@@ -70,7 +71,6 @@ namespace Apple_Battery_Check
             this.lblManufacturerBlockA = new System.Windows.Forms.Label();
             this.lblManufacturerBlockB = new System.Windows.Forms.Label();
             this.lblManufacturerBlockC = new System.Windows.Forms.Label();
-            this.lblBatteryHealth = new System.Windows.Forms.Label();
             this.lblChecksum = new System.Windows.Forms.Label();
             this.serialPortBAT = new System.IO.Ports.SerialPort(this.components);
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -289,6 +289,18 @@ namespace Apple_Battery_Check
             this.lStateOfCharge.Text = "Şarj Durumu";
             this.lStateOfCharge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lBatteryHealth
+            // 
+            this.lBatteryHealth.AutoSize = true;
+            this.lBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lBatteryHealth.Location = new System.Drawing.Point(5, 255);
+            this.lBatteryHealth.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.lBatteryHealth.Name = "lBatteryHealth";
+            this.lBatteryHealth.Size = new System.Drawing.Size(76, 20);
+            this.lBatteryHealth.TabIndex = 10;
+            this.lBatteryHealth.Text = "Pil Sağlığı";
+            this.lBatteryHealth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lDeviceType
             // 
             this.lDeviceType.AutoSize = true;
@@ -372,18 +384,6 @@ namespace Apple_Battery_Check
             this.lManufacturerBlockC.TabIndex = 14;
             this.lManufacturerBlockC.Text = "Manufacturer Block C";
             this.lManufacturerBlockC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lBatteryHealth
-            // 
-            this.lBatteryHealth.AutoSize = true;
-            this.lBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lBatteryHealth.Location = new System.Drawing.Point(5, 255);
-            this.lBatteryHealth.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
-            this.lBatteryHealth.Name = "lBatteryHealth";
-            this.lBatteryHealth.Size = new System.Drawing.Size(76, 20);
-            this.lBatteryHealth.TabIndex = 10;
-            this.lBatteryHealth.Text = "Pil Sağlığı";
-            this.lBatteryHealth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lChecksum
             // 
@@ -506,6 +506,18 @@ namespace Apple_Battery_Check
             this.lblStateOfCharge.Text = "--/--";
             this.lblStateOfCharge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblBatteryHealth
+            // 
+            this.lblBatteryHealth.AutoSize = true;
+            this.lblBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblBatteryHealth.Location = new System.Drawing.Point(5, 255);
+            this.lblBatteryHealth.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.lblBatteryHealth.Name = "lblBatteryHealth";
+            this.lblBatteryHealth.Size = new System.Drawing.Size(33, 20);
+            this.lblBatteryHealth.TabIndex = 44;
+            this.lblBatteryHealth.Text = "--/--";
+            this.lblBatteryHealth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lblDeviceType
             // 
             this.lblDeviceType.AutoSize = true;
@@ -589,18 +601,6 @@ namespace Apple_Battery_Check
             this.lblManufacturerBlockC.TabIndex = 48;
             this.lblManufacturerBlockC.Text = "--/--";
             this.lblManufacturerBlockC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblBatteryHealth
-            // 
-            this.lblBatteryHealth.AutoSize = true;
-            this.lblBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblBatteryHealth.Location = new System.Drawing.Point(5, 255);
-            this.lblBatteryHealth.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
-            this.lblBatteryHealth.Name = "lblBatteryHealth";
-            this.lblBatteryHealth.Size = new System.Drawing.Size(33, 20);
-            this.lblBatteryHealth.TabIndex = 44;
-            this.lblBatteryHealth.Text = "--/--";
-            this.lblBatteryHealth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblChecksum
             // 
