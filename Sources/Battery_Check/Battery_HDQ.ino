@@ -12,7 +12,7 @@ const byte _ext_commands[] = EXTD_CMD_MANUFACTURE_BLOCK_A_B_C;
 uint8_t _block_data[EXTD_CMD_BLOCK_DATA_H - EXTD_CMD_BLOCK_DATA_L];
 uint8_t _auth_data[] = { 0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10 };
 
-uint8_t _all_data[32];
+
 // Üst ve alt bayt için değişkenler
 static byte _bat_low_byte = 0;
 static byte _bat_high_byte = 0;
@@ -43,15 +43,18 @@ String Battery_HDQ_Data_Read() {
     _temp += String(getManufacturerInfoBlock(_ext_commands[i])) + SEPARATOR_CHARACTER;
   }
 
-  _temp += String(getManufacturerInfoBlock(_ext_commands[2]))  + SEPARATOR_CHARACTER;
 
   return _temp;
 }
 
-/*
- * @brief: 
- * @param str[]: 
- */
+uint8_t calculate_8bit_checksum(String data) {
+  uint8_t eightBitSum = 0;
+  for (size_t i = 0; i < data.length(); i++) {
+    eightBitSum += data.charAt(i);
+  }
+  uint8_t result = 255 - eightBitSum;
+  return result;
+}
 void pullBlockData(uint8_t str[], uint8_t _bat_low_byte, uint8_t _bat_high_byte) {
   uint8_t count = 0;
   for (uint8_t i = _bat_low_byte; i <= _bat_high_byte; i++) {
@@ -59,11 +62,15 @@ void pullBlockData(uint8_t str[], uint8_t _bat_low_byte, uint8_t _bat_high_byte)
     count++;
   }
 }
+void pushBlockData(const String &data, uint8_t _start_byte, uint8_t _end_byte, uint8_t hash) {
+  uint8_t j = 0;
+  for (uint8_t i = _start_byte; i <= _end_byte; i++) {
+    BAT.write(i, data[j]);
+    j++;
+  }
+  BAT.write(0x60, hash);
+}
 
-/*
- * @brief: DUZELTILECEK METHOD SİLİNECEK
- * @return: 
- */
 char* getManufacturerInfoBlock(byte payload) {
 
   BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, payload);
@@ -72,35 +79,7 @@ char* getManufacturerInfoBlock(byte payload) {
 }
 
 
-uint8_t calculate_lsb_checksum(const uint8_t* data) {
-  size_t size = sizeof(data);
-  uint16_t total = 0;
-  for (size_t i = 0; i < size; i++) {
-    total += data[i];  // Byte değerlerini topla
-  }
-  uint8_t lsb = total % 256;       // Toplamın LSB'sini hesapla
-  uint8_t complement = 255 - lsb;  // Tamamlayıcı değeri hesapla
-  return complement;
-}
 
-byte calculateEightBitSum(const uint8_t* data) {
-  size_t size = sizeof(data);
-  byte eightBitSum = 0;
-  for (int i = 0; i < size; i++) {
-    eightBitSum += data[i];
-  }
-  return 255-eightBitSum;
-}
-
-
-void pushBlockData(uint8_t data[], uint8_t _start_byte, uint8_t _end_byte) {
-  for (uint8_t i = _start_byte; i <= _end_byte; i++) {
-    //BAT.write(data[i]);
-  }
-  uint8_t hash = calculateEightBitSum(data);
-  BAT.write(0x53, hash);
-  delay(45);
-}
 
 String Battery_HDQ_Data_Read_TEST() {
 
@@ -149,12 +128,12 @@ String Battery_HDQ_Data_Read_TEST() {
   // _temp +="\n";
 
   // SEALED BLOCK OKUMA
-  BAT.write(EXTD_CMD_BLOCK_DATA_CONTROL, 0x00);  //PREPARE UNSEALED READ BU KOMUT SEALED MODDA ÇALIŞMAZ
-  BAT.write(EXTD_CMD_DATA_FLASH_CLASS, 0x38);    // DATA SINIFI SEÇİMİ BU KOMUT SEALED MODDA ÇALIŞMAZ
-  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x01);    // 5.1.1 Accessing The Data Flash
-  pullBlockData(_block_data, EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H);
-  _temp += (char*)_block_data;
-  _temp += "\n";
+  // BAT.write(EXTD_CMD_BLOCK_DATA_CONTROL, 0x00);  //PREPARE UNSEALED READ BU KOMUT SEALED MODDA ÇALIŞMAZ
+  // BAT.write(EXTD_CMD_DATA_FLASH_CLASS, 0x38);    // DATA SINIFI SEÇİMİ BU KOMUT SEALED MODDA ÇALIŞMAZ
+  // BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x01);    // 5.1.1 Accessing The Data Flash
+  // pullBlockData(_block_data, EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H);
+  // _temp += (char*)_block_data;
+  // _temp += "\n";
 
   // 3.4 Executing an Authentication Query
   // 5.1.1 Accessing The Data Flash
@@ -164,13 +143,17 @@ String Battery_HDQ_Data_Read_TEST() {
   // Sonra 20-byte yetkilendirme kodu Authenticate() adresine yani (0x40)'tan (0x53)'e kadar olan adrese gönderilir.
   // Geçerli bir toplam kontrol değeri (checksum), AuthenticateChecksum() (0x54) register a yazıldıktan sonra 45ms bekleyip
   // Authenticate() adresleri yani (0x40)'tan (0x53)'e kadar okunup host makinada karşılaştırılmalıdır.
+  _temp += "BURADAN BAK:\n";
+  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x02); 
+  pushBlockData("ORSAN_NUHOGLU", EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H,calculate_8bit_checksum("ORSAN_NUHOGLU"));
+  _temp += "HASH A: " + String(calculate_8bit_checksum("ORSAN_NUHOGLU"), HEX) + "\n";
+  _temp += "HASH B: " + String(BAT.read(0x60), HEX) + "\n";
 
-  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x00);  // 5.1.1 Accessing The Data Flash
-  pushBlockData(_auth_data, 0x40, 0x53);
-  _temp += "HASH A: " + String(calculateEightBitSum(_auth_data), HEX) + "\n";;
-  _temp += "HASH B: " + String(BAT.read(0x53), HEX) + "\n";
 
-
+  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x02);
+  pullBlockData(_block_data, EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H);
+  _temp += (char*)_block_data;
+  _temp += "\n";
 
   return _temp;
 }
