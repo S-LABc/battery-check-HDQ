@@ -11,6 +11,8 @@ const byte _sub_commands[] = SUB_COMMANDS_CODE;
 const byte _ext_commands[] = EXTD_CMD_MANUFACTURE_BLOCK_A_B_C;
 uint8_t _block_data[EXTD_CMD_BLOCK_DATA_H - EXTD_CMD_BLOCK_DATA_L];
 uint8_t _auth_data[] = { 0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10 };
+// Default Full-Access Key: 0x36720414 (Little-Endian: Key 1 - 0x0414, Key 0 - 0x3672)
+uint8_t _unseal_key[] = { 0x14, 0x04, 0x72, 0x36 };
 
 
 // Üst ve alt bayt için değişkenler
@@ -62,11 +64,14 @@ void pullBlockData(uint8_t str[], uint8_t _bat_low_byte, uint8_t _bat_high_byte)
     count++;
   }
 }
-void pushBlockData(const String &data, uint8_t _start_byte, uint8_t _end_byte, uint8_t hash) {
+void pushBlockData(const String& data, uint8_t _start_byte, uint8_t _end_byte, uint8_t hash) {
   uint8_t j = 0;
   for (uint8_t i = _start_byte; i <= _end_byte; i++) {
     BAT.write(i, data[j]);
     j++;
+    // if ((_end_byte-i) > j) {
+    //   BAT.write(i, 0x00);
+    // }
   }
   BAT.write(0x60, hash);
 }
@@ -127,8 +132,8 @@ String Battery_HDQ_Data_Read_TEST() {
   // _temp += (char*)_block_data;
   // _temp +="\n";
 
-  // SEALED BLOCK OKUMA
-  // BAT.write(EXTD_CMD_BLOCK_DATA_CONTROL, 0x00);  //PREPARE UNSEALED READ BU KOMUT SEALED MODDA ÇALIŞMAZ
+  // UNSEALED BLOCK OKUMA
+  // BAT.write(EXTD_CMD_BLOCK_DATA_CONTROL, 0x00);  // PREPARE UNSEALED READ BU KOMUT SEALED MODDA ÇALIŞMAZ
   // BAT.write(EXTD_CMD_DATA_FLASH_CLASS, 0x38);    // DATA SINIFI SEÇİMİ BU KOMUT SEALED MODDA ÇALIŞMAZ
   // BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x01);    // 5.1.1 Accessing The Data Flash
   // pullBlockData(_block_data, EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H);
@@ -143,17 +148,17 @@ String Battery_HDQ_Data_Read_TEST() {
   // Sonra 20-byte yetkilendirme kodu Authenticate() adresine yani (0x40)'tan (0x53)'e kadar olan adrese gönderilir.
   // Geçerli bir toplam kontrol değeri (checksum), AuthenticateChecksum() (0x54) register a yazıldıktan sonra 45ms bekleyip
   // Authenticate() adresleri yani (0x40)'tan (0x53)'e kadar okunup host makinada karşılaştırılmalıdır.
-  _temp += "BURADAN BAK:\n";
-  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x02); 
-  pushBlockData("ORSAN_NUHOGLU", EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H,calculate_8bit_checksum("ORSAN_NUHOGLU"));
-  _temp += "HASH A: " + String(calculate_8bit_checksum("ORSAN_NUHOGLU"), HEX) + "\n";
-  _temp += "HASH B: " + String(BAT.read(0x60), HEX) + "\n";
+  _temp += "WRITE BLOCKS:\n";
+  BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x02);
+  pushBlockData("F8Y05020ALBH86CBR", EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H, calculate_8bit_checksum("F8Y05020ALBH86CBR"));
+  _temp += "CREATED HASH: " + String(calculate_8bit_checksum("F8Y05020ALBH86CBR"), HEX) + "\n";
 
-
+  delay(100);
   BAT.write(EXTD_CMD_DATA_FLASH_BLOCK, 0x02);
   pullBlockData(_block_data, EXTD_CMD_BLOCK_DATA_L, EXTD_CMD_BLOCK_DATA_H);
   _temp += (char*)_block_data;
   _temp += "\n";
+  _temp += "RESPONSE HASH: " + String(BAT.read(0x60), HEX) + "\n";
 
   return _temp;
 }
