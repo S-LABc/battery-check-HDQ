@@ -17,9 +17,10 @@ namespace Apple_Battery_Check
 {
     public enum ControlStatus
     {
-        SE_EN, FAS, SS, CALMODE, CCA, BCA, QMAXUPDATE, HOSTIE,
-        SHUTDN_EN, HIBERNATE, FULLSLEEP, SLEEP, LDMD, RUP_DIS, VOK, QEN
+        QEN, VOK, RUP_DIS, LDMD, SLEEP, FULLSLEEP, HIBERNATE, SHUTDN_EN,
+        HOSTIE, QMAXUPDATE, BCA, CCA, CALMODE, SS, FAS, SE_EN
     }
+
 
     public partial class BatteryCheck : MetroForm
     {
@@ -147,7 +148,7 @@ namespace Apple_Battery_Check
             lblDesignCapacity.Text = batteryPack.DesignCapacity + Resources.SUFFIX_CAPACITY;
 
             //CONTROL SUB COMMANDS
-            lblControlStatus.Text = "0x" + batteryPack.ControlStatus;
+            lblControlStatus.Text = batteryPack.ControlStatus;
             lblDeviceType.Text = batteryPack.DeviceType;
             lblFirmwareVersion.Text = batteryPack.FirmwareVersion;
             lblHardwareVersion.Text = batteryPack.HardwareVersion;
@@ -157,32 +158,36 @@ namespace Apple_Battery_Check
             lblManufacturerBlockA.Text = batteryPack.ManufacturerBlockA;
             lblManufacturerBlockB.Text = batteryPack.ManufacturerBlockB;
             lblManufacturerBlockC.Text = batteryPack.ManufacturerBlockC;
-            lblChecksum.Text = batteryPack.Checksum;
+            //lblChecksum.Text = batteryPack.Checksum;
 
 
             ////HESAPLANAN VERİLER
             //lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
             
 
-            UpdateBitStatus(Convert.ToUInt16(addData[31].ToUpper(), 16));
+            UpdateBitStatus(Convert.ToUInt16(batteryPack.ControlStatus, 16));
 
         }
 
         private void UpdateBitStatus(ushort receivedData)
         {
             flowLayoutPanel5.Controls.Clear(); // Önceki kutuları temizle
-            for (int i = 0; i <= (int)ControlStatus.QEN; i++)
+            foreach (ControlStatus bit in Enum.GetValues(typeof(ControlStatus)))
             {
-                ControlStatus bit = (ControlStatus)i;
-                bool isActive = ((receivedData >> (int)bit) & 1) != 1;
                 string labelText = bit.ToString();
+                bool isActive = ((receivedData >> (int)bit) & 1) != 0;
 
                 Panel panel = new Panel
                 {
                     Size = new System.Drawing.Size(90, 15),
                     BackColor = isActive ? System.Drawing.Color.Green : System.Drawing.Color.OrangeRed,
-                    Controls = { new Label { Text = labelText, TextAlign = ContentAlignment.MiddleCenter, // Label içeriğini yatayda ortala
-                    Dock = DockStyle.Fill } }
+                    Controls = {
+                new Label {
+                    Text = labelText,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Dock = DockStyle.Fill
+                }
+            }
                 };
                 flowLayoutPanel5.Controls.Add(panel);
             }

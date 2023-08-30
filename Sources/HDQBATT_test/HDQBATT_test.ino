@@ -66,7 +66,7 @@ void setup() {
   //HDQ.setTimeBR(76); // 90
   //HDQ.setTimeFailTries(HDQ_DELAY_FAIL_TRIES_MIN); // Не из даташита. 100 - 65535
   
-  Serial.begin(57600);
+  Serial.begin(115200);
   
   // Пока не подключен АКБ
   while (!HDQ.isConnected()) {

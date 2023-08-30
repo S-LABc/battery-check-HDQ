@@ -66,7 +66,7 @@ namespace Apple_Battery_Check
             ManufacturerBlockA = _veri[36];//bu bloklar null terminated döner uzunluklar sabit değildir
             ManufacturerBlockB = _veri[37];
             ManufacturerBlockC = _veri[38];
-            Checksum = _veri[39];
+            //Checksum = _veri[39];
         }
     }
 
