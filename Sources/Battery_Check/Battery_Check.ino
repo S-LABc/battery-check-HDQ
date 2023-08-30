@@ -28,7 +28,7 @@ void loop() {
     else if (_serial_input == _compare_command[2]) {
       while (true) {
       Serial.println(Battery_HDQ_Data_Read_TEST());
-      delay(1000);
+      delay(50);
       }   
     }
 
