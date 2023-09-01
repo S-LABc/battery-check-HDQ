@@ -34,6 +34,8 @@ namespace Apple_Battery_Check
             this.cbInterface = new MetroFramework.Controls.MetroComboBox();
             this.cbPrort = new MetroFramework.Controls.MetroComboBox();
             this.btnRead = new MetroFramework.Controls.MetroButton();
+            this.btnWatch = new MetroFramework.Controls.MetroButton();
+            this.btnStop = new MetroFramework.Controls.MetroButton();
             this.ledBulb1 = new Bulb.LedBulb();
             this.chbDataLog = new System.Windows.Forms.CheckBox();
             this.YT = new MetroFramework.Controls.MetroLink();
@@ -83,6 +85,7 @@ namespace Apple_Battery_Check
             this.cpbAverageCurrent = new CircularProgressBar.CircularProgressBar();
             this.cpbAveragePower = new CircularProgressBar.CircularProgressBar();
             this.cpbStateofHealth = new CircularProgressBar.CircularProgressBar();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -94,6 +97,8 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel1.Controls.Add(this.cbInterface);
             this.flowLayoutPanel1.Controls.Add(this.cbPrort);
             this.flowLayoutPanel1.Controls.Add(this.btnRead);
+            this.flowLayoutPanel1.Controls.Add(this.btnWatch);
+            this.flowLayoutPanel1.Controls.Add(this.btnStop);
             this.flowLayoutPanel1.Controls.Add(this.ledBulb1);
             this.flowLayoutPanel1.Controls.Add(this.chbDataLog);
             this.flowLayoutPanel1.Controls.Add(this.YT);
@@ -142,10 +147,34 @@ namespace Apple_Battery_Check
             this.btnRead.UseSelectable = true;
             this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 
+            // btnWatch
+            // 
+            this.btnWatch.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnWatch.Location = new System.Drawing.Point(305, 5);
+            this.btnWatch.Margin = new System.Windows.Forms.Padding(5);
+            this.btnWatch.Name = "btnWatch";
+            this.btnWatch.Size = new System.Drawing.Size(113, 29);
+            this.btnWatch.TabIndex = 14;
+            this.btnWatch.Text = "Watch";
+            this.btnWatch.UseSelectable = true;
+            this.btnWatch.Click += new System.EventHandler(this.btnWatch_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnStop.Location = new System.Drawing.Point(428, 5);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(5);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(113, 29);
+            this.btnStop.TabIndex = 15;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseSelectable = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // ledBulb1
             // 
             this.ledBulb1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ledBulb1.Location = new System.Drawing.Point(303, 3);
+            this.ledBulb1.Location = new System.Drawing.Point(549, 3);
             this.ledBulb1.Name = "ledBulb1";
             this.ledBulb1.On = true;
             this.ledBulb1.Size = new System.Drawing.Size(31, 33);
@@ -156,7 +185,7 @@ namespace Apple_Battery_Check
             // chbDataLog
             // 
             this.chbDataLog.AutoSize = true;
-            this.chbDataLog.Location = new System.Drawing.Point(342, 10);
+            this.chbDataLog.Location = new System.Drawing.Point(588, 10);
             this.chbDataLog.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.chbDataLog.Name = "chbDataLog";
             this.chbDataLog.Size = new System.Drawing.Size(171, 20);
@@ -167,7 +196,7 @@ namespace Apple_Battery_Check
             // 
             // YT
             // 
-            this.YT.Location = new System.Drawing.Point(523, 10);
+            this.YT.Location = new System.Drawing.Point(769, 10);
             this.YT.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.YT.Name = "YT";
             this.YT.Size = new System.Drawing.Size(75, 23);
@@ -927,6 +956,11 @@ namespace Apple_Battery_Check
             this.cpbStateofHealth.TextMargin = new System.Windows.Forms.Padding(0);
             this.cpbStateofHealth.Value = 1;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.BtnRead_Click);
+            // 
             // BatteryCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1012,6 +1046,9 @@ namespace Apple_Battery_Check
         private CircularProgressBar.CircularProgressBar cpbAverageCurrent;
         private CircularProgressBar.CircularProgressBar cpbAveragePower;
         private CircularProgressBar.CircularProgressBar cpbStateofHealth;
+        private MetroFramework.Controls.MetroButton btnWatch;
+        private MetroFramework.Controls.MetroButton btnStop;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

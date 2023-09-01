@@ -283,5 +283,14 @@ namespace Apple_Battery_Check
             ((LedBulb)sender).Blink(_blink);
         }
 
+        private void btnWatch_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+        }
     }
 }
