@@ -143,6 +143,23 @@ namespace Apple_Battery_Check
             cpbCapacity.SuperscriptText = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
 
 
+            cpbChargingVoltage.Maximum = 6000;
+            cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);
+            cpbChargingVoltage.SubscriptText = cpbChargingVoltage.Value + Resources.SUFFIX_VOLTAGE;
+
+            cpbChargingCurrent.Maximum = 6000;
+            cpbChargingCurrent.Value = Convert.ToInt32(batteryPack.ChargingCurrent);
+            cpbChargingCurrent.SubscriptText = cpbChargingCurrent.Value + Resources.SUFFIX_CURRENT;
+
+
+            cpbAveragePower.Maximum = 30000;
+            cpbAveragePower.Value = Convert.ToInt32(batteryPack.AveragePower);
+            cpbAveragePower.SubscriptText = cpbAveragePower.Value + Resources.SUFFIX_POWER;
+
+            cpbAverageCurrent.Maximum = 6000;
+            cpbAverageCurrent.Value = Convert.ToInt32(batteryPack.AverageCurrent);
+            cpbAverageCurrent.SubscriptText = cpbAverageCurrent.Value + Resources.SUFFIX_CURRENT;
+
             lblCycleCount.Text =  batteryPack.CycleCount;
             lblStateOfCharge.Text = batteryPack.StateOfCharge + Resources.SUFFIX_PERCENT;
             lblBatteryHealth.Text = batteryPack.StateOfHealth + Resources.SUFFIX_PERCENT;
@@ -220,11 +237,11 @@ namespace Apple_Battery_Check
             catch
             {
                 serialPortBAT.Close();
-                MetroMessageBox.Show(this,
-                    Messages.ERROR_RELATION,
-                    Messages.ERROR,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                //MetroMessageBox.Show(this,
+                //    Messages.ERROR_RELATION,
+                //    Messages.ERROR,
+                //    MessageBoxButtons.OK,
+                //    MessageBoxIcon.Error);
             }
         }
 
@@ -252,11 +269,11 @@ namespace Apple_Battery_Check
             catch
             {
                 LabelDefaultValue();
-                MetroMessageBox.Show(this,
-                    Messages.ERROR_DATA_TYPE,
-                    Messages.ERROR,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                //MetroMessageBox.Show(this,
+                //    Messages.ERROR_DATA_TYPE,
+                //    Messages.ERROR,
+                //    MessageBoxButtons.OK,
+                //    MessageBoxIcon.Error);
             }
         }
 

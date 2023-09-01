@@ -170,11 +170,29 @@ namespace Apple_Battery_Check.Properties {
         }
         
         /// <summary>
+        ///    mA benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        internal static string SUFFIX_CURRENT {
+            get {
+                return ResourceManager.GetString("SUFFIX_CURRENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   % benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         internal static string SUFFIX_PERCENT {
             get {
                 return ResourceManager.GetString("SUFFIX_PERCENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    mW benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        internal static string SUFFIX_POWER {
+            get {
+                return ResourceManager.GetString("SUFFIX_POWER", resourceCulture);
             }
         }
         

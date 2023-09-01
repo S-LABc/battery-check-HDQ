@@ -958,7 +958,7 @@ namespace Apple_Battery_Check
             // 
             // timer1
             // 
-            this.timer1.Interval = 2000;
+            this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.BtnRead_Click);
             // 
             // BatteryCheck
