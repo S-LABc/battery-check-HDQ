@@ -142,6 +142,13 @@ namespace Apple_Battery_Check
             cpbCapacity.SubscriptText = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
             cpbCapacity.SuperscriptText = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
 
+            cpbStateofCharge.Maximum = 100;
+            cpbStateofCharge.Value = Convert.ToInt32(batteryPack.StateOfCharge);
+            cpbStateofCharge.SubscriptText = cpbStateofCharge.Value + Resources.SUFFIX_PERCENT;
+
+            cpbStateofHealth.Maximum = 100;
+            cpbStateofHealth.Value = Convert.ToInt32(batteryPack.StateOfHealth);
+            cpbStateofHealth.SubscriptText = cpbStateofHealth.Value + Resources.SUFFIX_PERCENT;
 
             cpbChargingVoltage.Maximum = 6000;
             cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);
