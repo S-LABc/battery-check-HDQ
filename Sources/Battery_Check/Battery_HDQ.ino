@@ -74,6 +74,7 @@ String Battery_HDQ_Data_Read() {
     _temp += String(word(_bat_high_byte, _bat_low_byte), HEX) + SEPARATOR_CHARACTER;
   }
 
+  //block komutları
   for (uint8_t i = 0; i < sizeof(_ext_commands); i++) {
     _temp += String(getManufacturerInfoBlock(_ext_commands[i])) + SEPARATOR_CHARACTER;
   }

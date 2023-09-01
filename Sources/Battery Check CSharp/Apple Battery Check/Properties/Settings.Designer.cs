@@ -65,9 +65,9 @@ namespace Apple_Battery_Check.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public int SHIFT_VOLTAGE {
+        public double SHIFT_VOLTAGE {
             get {
-                return ((int)(this["SHIFT_VOLTAGE"]));
+                return ((double)(this["SHIFT_VOLTAGE"]));
             }
         }
         

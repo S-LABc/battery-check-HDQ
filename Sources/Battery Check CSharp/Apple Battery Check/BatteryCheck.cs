@@ -2,6 +2,7 @@
 using Bulb;
 using MetroFramework;
 using MetroFramework.Forms;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -109,7 +110,9 @@ namespace Apple_Battery_Check
                         lRemainingCapacity.Text + Resources.SPACE_TEXT + lblRemainingCapacity.Text,
                         lStateOfCharge.Text + Resources.SPACE_TEXT + lblStateOfCharge.Text,
                         lTemperature.Text + Resources.SPACE_TEXT + lblTemperature.Text,
-                        lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text
+                        lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text,
+                        JsonConvert.SerializeObject(batteryPack, Formatting.Indented)
+
                      };
 
             File.WriteAllLines(@".\" + DateTime.Now.ToString(Resources.FILE_NAME_FORMAT) + Resources.BOT_SLASH + cbInterface.Text + Resources.EXTANSION_FORMAT, textData, Encoding.UTF8);
@@ -120,7 +123,7 @@ namespace Apple_Battery_Check
             //STANDARD COMMANDS
             lblTemperature.Text = batteryPack.TemperatureCelsius + Resources.SUFFIX_CELSIUS_DEGREE;
             cpbTempature.Value = Convert.ToInt32(batteryPack.TemperatureCelsius);
-            cpbTempature.SubscriptText = batteryPack.TemperatureCelsius + Resources.SUFFIX_CELSIUS_DEGREE;
+            cpbTempature.SubscriptText = lblTemperature.Text;
             cpbTempature.SuperscriptText = batteryPack.TemperatureFahrenheit + " F";// TODO
 
             lblVoltage.Text = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
@@ -128,7 +131,7 @@ namespace Apple_Battery_Check
             cpbVoltage.Maximum = 4400;
             cpbVoltage.Value = Convert.ToInt32(batteryPack.Voltage);//hack
             cpbVoltage.SubscriptText = batteryPack.Voltage + " mV";
-            cpbVoltage.SuperscriptText = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
+            cpbVoltage.SuperscriptText = lblVoltage.Text;
 
 
             lblRemainingCapacity.Text = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
