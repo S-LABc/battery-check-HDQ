@@ -155,16 +155,25 @@
     <value>°C</value>
   </data>
   <data name="SUFFIX_CURRENT" xml:space="preserve">
+    <value> A</value>
+  </data>
+  <data name="SUFFIX_CURRENT_MA" xml:space="preserve">
     <value> mA</value>
   </data>
   <data name="SUFFIX_PERCENT" xml:space="preserve">
     <value>%</value>
   </data>
   <data name="SUFFIX_POWER" xml:space="preserve">
+    <value> W</value>
+  </data>
+  <data name="SUFFIX_POWER_MW" xml:space="preserve">
     <value> mW</value>
   </data>
   <data name="SUFFIX_VOLTAGE" xml:space="preserve">
     <value> V</value>
+  </data>
+  <data name="SUFFIX_VOLTAGE_MV" xml:space="preserve">
+    <value> mV</value>
   </data>
   <data name="TEXT_HDQ" xml:space="preserve">
     <value>HDQ</value>

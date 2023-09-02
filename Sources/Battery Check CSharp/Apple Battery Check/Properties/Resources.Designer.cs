@@ -170,11 +170,20 @@ namespace Apple_Battery_Check.Properties {
         }
         
         /// <summary>
-        ///    mA benzeri yerelleştirilmiş bir dize arar.
+        ///    A benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         internal static string SUFFIX_CURRENT {
             get {
                 return ResourceManager.GetString("SUFFIX_CURRENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    mA benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        internal static string SUFFIX_CURRENT_MA {
+            get {
+                return ResourceManager.GetString("SUFFIX_CURRENT_MA", resourceCulture);
             }
         }
         
@@ -188,11 +197,20 @@ namespace Apple_Battery_Check.Properties {
         }
         
         /// <summary>
-        ///    mW benzeri yerelleştirilmiş bir dize arar.
+        ///    W benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         internal static string SUFFIX_POWER {
             get {
                 return ResourceManager.GetString("SUFFIX_POWER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    mW benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        internal static string SUFFIX_POWER_MW {
+            get {
+                return ResourceManager.GetString("SUFFIX_POWER_MW", resourceCulture);
             }
         }
         
@@ -202,6 +220,15 @@ namespace Apple_Battery_Check.Properties {
         internal static string SUFFIX_VOLTAGE {
             get {
                 return ResourceManager.GetString("SUFFIX_VOLTAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    mV benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        internal static string SUFFIX_VOLTAGE_MV {
+            get {
+                return ResourceManager.GetString("SUFFIX_VOLTAGE_MV", resourceCulture);
             }
         }
         

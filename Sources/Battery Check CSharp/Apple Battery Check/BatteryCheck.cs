@@ -126,12 +126,12 @@ namespace Apple_Battery_Check
             cpbTempature.SubscriptText = lblTemperature.Text;
             cpbTempature.SuperscriptText = batteryPack.TemperatureFahrenheit + " F";// TODO
 
-            lblVoltage.Text = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
+            lblVoltage.Text = batteryPack.Voltage + Resources.SUFFIX_VOLTAGE_MV; ;
             cpbVoltage.Minimum = 3200;
             cpbVoltage.Maximum = 4400;
-            cpbVoltage.Value = Convert.ToInt32(batteryPack.Voltage);//hack
-            cpbVoltage.SubscriptText = batteryPack.Voltage + " mV";
-            cpbVoltage.SuperscriptText = lblVoltage.Text;
+            cpbVoltage.Value = batteryPack.Voltage;//hack
+            cpbVoltage.SubscriptText = lblVoltage.Text;
+            cpbVoltage.SuperscriptText = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
 
 
             lblRemainingCapacity.Text = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
@@ -156,20 +156,21 @@ namespace Apple_Battery_Check
 
             cpbChargingVoltage.Maximum = 6000;
             cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);
-            cpbChargingVoltage.SubscriptText = cpbChargingVoltage.Value + Resources.SUFFIX_VOLTAGE;
+            cpbChargingVoltage.SubscriptText = cpbChargingVoltage.Value + Resources.SUFFIX_VOLTAGE_MV;
 
             cpbChargingCurrent.Maximum = 7000;
             cpbChargingCurrent.Value = Convert.ToInt32(batteryPack.ChargingCurrent);
-            cpbChargingCurrent.SubscriptText = cpbChargingCurrent.Value + Resources.SUFFIX_CURRENT;
-
+            cpbChargingCurrent.SubscriptText = cpbChargingCurrent.Value + Resources.SUFFIX_CURRENT_MA;
 
             cpbAveragePower.Maximum = 30000;
-            cpbAveragePower.Value = Convert.ToInt32(batteryPack.AveragePower);
-            cpbAveragePower.SubscriptText = cpbAveragePower.Value + Resources.SUFFIX_POWER;
+            cpbAveragePower.Maximum = (Math.Abs(batteryPack.AveragePower) > 30000) ? Math.Abs(batteryPack.AveragePower) : cpbAveragePower.Maximum;
+            cpbAveragePower.Value = Math.Abs(batteryPack.AveragePower);
+            cpbAveragePower.SubscriptText = cpbAveragePower.Value + Resources.SUFFIX_POWER_MW;
 
-            cpbAverageCurrent.Maximum = 6000;
-            cpbAverageCurrent.Value = Convert.ToInt32(batteryPack.AverageCurrent);
-            cpbAverageCurrent.SubscriptText = cpbAverageCurrent.Value + Resources.SUFFIX_CURRENT;
+            cpbAverageCurrent.Maximum = 3000;
+            cpbAverageCurrent.Maximum = (Math.Abs(batteryPack.AverageCurrent) > 3000 ) ? Math.Abs(batteryPack.AverageCurrent) : cpbAverageCurrent.Maximum;
+            cpbAverageCurrent.Value = Math.Abs(batteryPack.AverageCurrent);
+            cpbAverageCurrent.SubscriptText = cpbAverageCurrent.Value + Resources.SUFFIX_CURRENT_MA;
 
             lblCycleCount.Text = batteryPack.CycleCount;
 
@@ -188,7 +189,7 @@ namespace Apple_Battery_Check
             lblManufacturerBlockA.Text = batteryPack.ManufacturerBlockA;
             lblManufacturerBlockB.Text = batteryPack.ManufacturerBlockB;
             lblManufacturerBlockC.Text = batteryPack.ManufacturerBlockC;
-            lblChecksum.Text = batteryPack.StateOfHealth;
+            lblChecksum.Text = (batteryPack.TimeToEmpty == 65535) ? "Not Discharging" : batteryPack.TimeToEmpty.ToString() +" minutes remaining";
 
 
             ////HESAPLANAN VERİLER

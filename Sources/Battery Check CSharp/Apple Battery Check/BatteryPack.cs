@@ -34,12 +34,12 @@ namespace Apple_Battery_Check
         public int FullAvailableCapacity { get; private set; }
         public int RemainingCapacity { get; private set; }
         public int FullChargeCapacity { get; private set; }
-        public double AverageCurrent { get; private set; } // - discharge + charge
+        public int AverageCurrent { get; private set; }
         public int TimeToEmpty { get; private set; }
         public int FullChargeCapacityFiltered { get; private set; }
         public int SafetyStatus { get; private set; }
         public int FullChargeCapacityUnfiltered { get; private set; }
-        public double Imax { get; private set; }
+        public int Imax { get; private set; }
         public int RemainingCapacityUnflitered { get; private set; }
         public int RemainingCapacityFiltered { get; private set; }
         public int BTPSOC1Set { get; private set; }
@@ -51,7 +51,7 @@ namespace Apple_Battery_Check
         public string StateOfCharge { get; private set; }
         public string StateOfHealth { get; private set; }
         public int ChargingVoltage { get; private set; }
-        public double ChargingCurrent { get; private set; }
+        public int ChargingCurrent { get; private set; }
         public double PassedCharge { get; private set; }
         public string DOD0 { get; private set; }
         public double SelfDischargeCurrent { get; private set; }
@@ -64,7 +64,7 @@ namespace Apple_Battery_Check
         public string Reserved2 { get; private set; }
         public string Reserved3 { get; private set; }
         public string Reserved4 { get; private set; }
-        public string AveragePower { get; private set; }
+        public int AveragePower { get; private set; }
 
         //control commands 
         public string ControlStatus { get; private set; }
@@ -100,7 +100,15 @@ namespace Apple_Battery_Check
             FullAvailableCapacity = Convert.ToInt32(_veri[7]);
             RemainingCapacity = Convert.ToInt32(_veri[8]);
             FullChargeCapacity = Convert.ToInt32(_veri[9]);
-            AverageCurrent = Convert.ToInt32(_veri[10]);
+            // Metin olarak gelen "65535" değerini hexadecimal (hex) formata dönüştür
+            // Hexadecimal değeri işaretli bir tam sayıya çevir
+            //AverageCurrent = Convert.ToInt32(Convert.ToUInt16(_veri[10]).ToString("X"), 16);
+            //AverageCurrent = int.Parse(_veri[10], System.Globalization.NumberStyles.HexNumber);
+            //ilk denediğim şeydi nedense yukarıda uğraştım
+            AverageCurrent =  int.TryParse(_veri[10], out int intValue) ? (short)intValue : (short)0;
+
+
+
             TimeToEmpty = Convert.ToInt32(_veri[11]);
             FullChargeCapacityFiltered = Convert.ToInt32(_veri[12]);
             SafetyStatus = Convert.ToInt32(_veri[13]);
@@ -128,7 +136,7 @@ namespace Apple_Battery_Check
             Reserved2 = _veri[34];
             Reserved3 = _veri[35];
             Reserved4 = _veri[36];
-            AveragePower = _veri[37];
+            AveragePower = int.TryParse(_veri[37], out int intValue2) ? (short)intValue2 : (short)0;
 
             ControlStatus = "0x" + _veri[38].ToUpper();
             DeviceType = Resources.PREFIX_CONTROLLER + _veri[39].ToUpper();
