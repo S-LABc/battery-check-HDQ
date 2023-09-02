@@ -142,19 +142,23 @@ namespace Apple_Battery_Check
             cpbCapacity.SubscriptText = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
             cpbCapacity.SuperscriptText = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
 
+            lblStateOfCharge.Text = batteryPack.StateOfCharge + Resources.SUFFIX_PERCENT;
             cpbStateofCharge.Maximum = 100;
             cpbStateofCharge.Value = Convert.ToInt32(batteryPack.StateOfCharge);
-            cpbStateofCharge.SubscriptText = cpbStateofCharge.Value + Resources.SUFFIX_PERCENT;
+            cpbStateofCharge.SubscriptText = lblStateOfCharge.Text;
 
-            cpbStateofHealth.Maximum = 100;
-            cpbStateofHealth.Value = Convert.ToInt32(batteryPack.StateOfHealth);
+
+            int staohea = Convert.ToInt32(Convert.ToDouble(batteryPack.FullChargeCapacity) / Convert.ToDouble(batteryPack.DesignCapacity) * 100);
+            lblBatteryHealth.Text = staohea + Resources.SUFFIX_PERCENT;
+
+            cpbStateofHealth.Value = staohea;
             cpbStateofHealth.SubscriptText = cpbStateofHealth.Value + Resources.SUFFIX_PERCENT;
 
             cpbChargingVoltage.Maximum = 6000;
             cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);
             cpbChargingVoltage.SubscriptText = cpbChargingVoltage.Value + Resources.SUFFIX_VOLTAGE;
 
-            cpbChargingCurrent.Maximum = 6000;
+            cpbChargingCurrent.Maximum = 7000;
             cpbChargingCurrent.Value = Convert.ToInt32(batteryPack.ChargingCurrent);
             cpbChargingCurrent.SubscriptText = cpbChargingCurrent.Value + Resources.SUFFIX_CURRENT;
 
@@ -167,9 +171,8 @@ namespace Apple_Battery_Check
             cpbAverageCurrent.Value = Convert.ToInt32(batteryPack.AverageCurrent);
             cpbAverageCurrent.SubscriptText = cpbAverageCurrent.Value + Resources.SUFFIX_CURRENT;
 
-            lblCycleCount.Text =  batteryPack.CycleCount;
-            lblStateOfCharge.Text = batteryPack.StateOfCharge + Resources.SUFFIX_PERCENT;
-            lblBatteryHealth.Text = batteryPack.StateOfHealth + Resources.SUFFIX_PERCENT;
+            lblCycleCount.Text = batteryPack.CycleCount;
+
 
             // +EXTENDED COMMAND
             lblDesignCapacity.Text = batteryPack.DesignCapacity + Resources.SUFFIX_CAPACITY;
@@ -185,12 +188,12 @@ namespace Apple_Battery_Check
             lblManufacturerBlockA.Text = batteryPack.ManufacturerBlockA;
             lblManufacturerBlockB.Text = batteryPack.ManufacturerBlockB;
             lblManufacturerBlockC.Text = batteryPack.ManufacturerBlockC;
-            //lblChecksum.Text = batteryPack.Checksum;
+            lblChecksum.Text = batteryPack.StateOfHealth;
 
 
             ////HESAPLANAN VERİLER
             //lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
-            
+
 
             UpdateBitStatus(Convert.ToUInt16(batteryPack.ControlStatus, 16));
 
@@ -203,18 +206,11 @@ namespace Apple_Battery_Check
             {
                 string labelText = bit.ToString();
                 bool isActive = ((receivedData >> (int)bit) & 1) != 0;
-
                 Panel panel = new Panel
                 {
                     Size = new System.Drawing.Size(90, 15),
                     BackColor = isActive ? System.Drawing.Color.Green : System.Drawing.Color.OrangeRed,
-                    Controls = {
-                new Label {
-                    Text = labelText,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Dock = DockStyle.Fill
-                }
-            }
+                    Controls = { new Label { Text = labelText, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill } }
                 };
                 flowLayoutPanel5.Controls.Add(panel);
             }
@@ -244,11 +240,11 @@ namespace Apple_Battery_Check
             catch
             {
                 serialPortBAT.Close();
-                //MetroMessageBox.Show(this,
-                //    Messages.ERROR_RELATION,
-                //    Messages.ERROR,
-                //    MessageBoxButtons.OK,
-                //    MessageBoxIcon.Error);
+                MetroMessageBox.Show(this,
+                    Messages.ERROR_RELATION,
+                    Messages.ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -264,8 +260,10 @@ namespace Apple_Battery_Check
             Console.WriteLine(dataReceived);
             string[] tempSplited = dataReceived.Split(Settings.Default.SEPARATOR_SLASH);
             batteryPack.UpdateData(dataReceived);
+            LabelDataAdd(tempSplited);
             try
             {
+                batteryPack.UpdateData(dataReceived);
                 LabelDataAdd(tempSplited);
 
                 if (chbDataLog.Checked)
@@ -275,12 +273,12 @@ namespace Apple_Battery_Check
             }
             catch
             {
-                LabelDefaultValue();
-                //MetroMessageBox.Show(this,
-                //    Messages.ERROR_DATA_TYPE,
-                //    Messages.ERROR,
-                //    MessageBoxButtons.OK,
-                //    MessageBoxIcon.Error);
+                //LabelDefaultValue(); //hatamı yoksa veri alınmadımı belli olsun
+                MetroMessageBox.Show(this,
+                    Messages.ERROR_DATA_TYPE,
+                    Messages.ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 

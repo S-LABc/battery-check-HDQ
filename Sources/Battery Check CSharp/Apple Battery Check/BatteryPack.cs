@@ -110,7 +110,7 @@ namespace Apple_Battery_Check
             RemainingCapacityFiltered = Convert.ToInt32(_veri[17]);
             BTPSOC1Set = Convert.ToInt32(_veri[18]);
             BTPSOC1Clear = Convert.ToInt32(_veri[19]);
-            InternalTemperatureKelvin = Convert.ToInt32(_veri[20]);
+            InternalTemperatureKelvin = Convert.ToInt32(_veri[20]);//todo
             CycleCount = _veri[21];
             StateOfCharge = _veri[22];
             StateOfHealth = _veri[23];

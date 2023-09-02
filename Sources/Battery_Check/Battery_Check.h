@@ -20,7 +20,7 @@
  * 66  -   "B"      - I2C Pil Okuma (yeni)
 **/
 #define COMPARE_COMMAND_DEC \
-  { 65, 66, 67,68 }
+  { 65, 66, 67, 68 }
 
 // Serial Veri Hızı
 #define SERIAL_BAUDRATE 57600

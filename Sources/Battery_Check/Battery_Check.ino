@@ -35,6 +35,7 @@ void loop() {
     // unseal
     else if (_serial_input == _compare_command[3]) {
       Unseal();
+      Seal();
     }
 
 
