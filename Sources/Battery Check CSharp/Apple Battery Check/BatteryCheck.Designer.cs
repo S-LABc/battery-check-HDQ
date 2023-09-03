@@ -39,7 +39,6 @@ namespace Apple_Battery_Check
             this.ledBulb1 = new Bulb.LedBulb();
             this.chbDataLog = new System.Windows.Forms.CheckBox();
             this.YT = new MetroFramework.Controls.MetroLink();
-            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lTemperature = new System.Windows.Forms.Label();
             this.lVoltage = new System.Windows.Forms.Label();
@@ -56,7 +55,7 @@ namespace Apple_Battery_Check
             this.lManufacturerBlockA = new System.Windows.Forms.Label();
             this.lManufacturerBlockB = new System.Windows.Forms.Label();
             this.lManufacturerBlockC = new System.Windows.Forms.Label();
-            this.lChecksum = new System.Windows.Forms.Label();
+            this.lTimeToEmpty = new System.Windows.Forms.Label();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblTemperature = new System.Windows.Forms.Label();
             this.lblVoltage = new System.Windows.Forms.Label();
@@ -73,23 +72,31 @@ namespace Apple_Battery_Check
             this.lblManufacturerBlockA = new System.Windows.Forms.Label();
             this.lblManufacturerBlockB = new System.Windows.Forms.Label();
             this.lblManufacturerBlockC = new System.Windows.Forms.Label();
-            this.lblChecksum = new System.Windows.Forms.Label();
+            this.lblTimeToEmpty = new System.Windows.Forms.Label();
             this.serialPortBAT = new System.IO.Ports.SerialPort(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.cpbTempature = new CircularProgressBar.CircularProgressBar();
             this.cpbVoltage = new CircularProgressBar.CircularProgressBar();
             this.cpbCapacity = new CircularProgressBar.CircularProgressBar();
-            this.cpbChargingCurrent = new CircularProgressBar.CircularProgressBar();
-            this.cpbChargingVoltage = new CircularProgressBar.CircularProgressBar();
+            this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
+            this.cpbStateofHealth = new CircularProgressBar.CircularProgressBar();
             this.cpbStateofCharge = new CircularProgressBar.CircularProgressBar();
             this.cpbAverageCurrent = new CircularProgressBar.CircularProgressBar();
             this.cpbAveragePower = new CircularProgressBar.CircularProgressBar();
-            this.cpbStateofHealth = new CircularProgressBar.CircularProgressBar();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.cpbChargingCurrent = new CircularProgressBar.CircularProgressBar();
+            this.cpbChargingVoltage = new CircularProgressBar.CircularProgressBar();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
+            this.metroTabControl1.SuspendLayout();
+            this.metroTabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -102,12 +109,11 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel1.Controls.Add(this.ledBulb1);
             this.flowLayoutPanel1.Controls.Add(this.chbDataLog);
             this.flowLayoutPanel1.Controls.Add(this.YT);
-            this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 635);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 664);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1219, 209);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1218, 180);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // cbInterface
@@ -205,13 +211,6 @@ namespace Apple_Battery_Check
             this.YT.UseSelectable = true;
             this.YT.Click += new System.EventHandler(this.YT_Click);
             // 
-            // flowLayoutPanel5
-            // 
-            this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 42);
-            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(790, 100);
-            this.flowLayoutPanel5.TabIndex = 13;
-            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.lTemperature);
@@ -229,13 +228,13 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel2.Controls.Add(this.lManufacturerBlockA);
             this.flowLayoutPanel2.Controls.Add(this.lManufacturerBlockB);
             this.flowLayoutPanel2.Controls.Add(this.lManufacturerBlockC);
-            this.flowLayoutPanel2.Controls.Add(this.lChecksum);
+            this.flowLayoutPanel2.Controls.Add(this.lTimeToEmpty);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(10, 70);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 565);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(176, 594);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // lTemperature
@@ -418,17 +417,17 @@ namespace Apple_Battery_Check
             this.lManufacturerBlockC.Text = "Manufacturer Block C";
             this.lManufacturerBlockC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lChecksum
+            // lTimeToEmpty
             // 
-            this.lChecksum.AutoSize = true;
-            this.lChecksum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lChecksum.Location = new System.Drawing.Point(5, 535);
-            this.lChecksum.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
-            this.lChecksum.Name = "lChecksum";
-            this.lChecksum.Size = new System.Drawing.Size(84, 20);
-            this.lChecksum.TabIndex = 15;
-            this.lChecksum.Text = "Checksum";
-            this.lChecksum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lTimeToEmpty.AutoSize = true;
+            this.lTimeToEmpty.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lTimeToEmpty.Location = new System.Drawing.Point(5, 535);
+            this.lTimeToEmpty.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.lTimeToEmpty.Name = "lTimeToEmpty";
+            this.lTimeToEmpty.Size = new System.Drawing.Size(114, 20);
+            this.lTimeToEmpty.TabIndex = 15;
+            this.lTimeToEmpty.Text = "Time To Empty";
+            this.lTimeToEmpty.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel3
             // 
@@ -447,12 +446,12 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel3.Controls.Add(this.lblManufacturerBlockA);
             this.flowLayoutPanel3.Controls.Add(this.lblManufacturerBlockB);
             this.flowLayoutPanel3.Controls.Add(this.lblManufacturerBlockC);
-            this.flowLayoutPanel3.Controls.Add(this.lblChecksum);
+            this.flowLayoutPanel3.Controls.Add(this.lblTimeToEmpty);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(186, 70);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(1043, 565);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(1042, 594);
             this.flowLayoutPanel3.TabIndex = 1;
             // 
             // lblTemperature
@@ -635,38 +634,72 @@ namespace Apple_Battery_Check
             this.lblManufacturerBlockC.Text = "--/--";
             this.lblManufacturerBlockC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblChecksum
+            // lblTimeToEmpty
             // 
-            this.lblChecksum.AutoSize = true;
-            this.lblChecksum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblChecksum.Location = new System.Drawing.Point(5, 535);
-            this.lblChecksum.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
-            this.lblChecksum.Name = "lblChecksum";
-            this.lblChecksum.Size = new System.Drawing.Size(33, 20);
-            this.lblChecksum.TabIndex = 49;
-            this.lblChecksum.Text = "--/--";
-            this.lblChecksum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTimeToEmpty.AutoSize = true;
+            this.lblTimeToEmpty.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTimeToEmpty.Location = new System.Drawing.Point(5, 535);
+            this.lblTimeToEmpty.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.lblTimeToEmpty.Name = "lblTimeToEmpty";
+            this.lblTimeToEmpty.Size = new System.Drawing.Size(33, 20);
+            this.lblTimeToEmpty.TabIndex = 49;
+            this.lblTimeToEmpty.Text = "--/--";
+            this.lblTimeToEmpty.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // serialPortBAT
             // 
             this.serialPortBAT.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPortBAT_DataReceived);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 3000;
+            this.timer1.Tick += new System.EventHandler(this.BtnRead_Click);
+            // 
             // flowLayoutPanel4
             // 
-            this.flowLayoutPanel4.Controls.Add(this.cpbTempature);
-            this.flowLayoutPanel4.Controls.Add(this.cpbVoltage);
-            this.flowLayoutPanel4.Controls.Add(this.cpbCapacity);
-            this.flowLayoutPanel4.Controls.Add(this.cpbChargingCurrent);
-            this.flowLayoutPanel4.Controls.Add(this.cpbChargingVoltage);
-            this.flowLayoutPanel4.Controls.Add(this.cpbStateofCharge);
-            this.flowLayoutPanel4.Controls.Add(this.cpbAverageCurrent);
-            this.flowLayoutPanel4.Controls.Add(this.cpbAveragePower);
-            this.flowLayoutPanel4.Controls.Add(this.cpbStateofHealth);
+            this.flowLayoutPanel4.Controls.Add(this.metroTabControl1);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(757, 70);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(426, 70);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(472, 565);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(802, 594);
             this.flowLayoutPanel4.TabIndex = 2;
+            // 
+            // metroTabControl1
+            // 
+            this.metroTabControl1.Controls.Add(this.metroTabPage1);
+            this.metroTabControl1.Controls.Add(this.metroTabPage2);
+            this.metroTabControl1.Controls.Add(this.metroTabPage3);
+            this.metroTabControl1.Location = new System.Drawing.Point(3, 3);
+            this.metroTabControl1.Name = "metroTabControl1";
+            this.metroTabControl1.SelectedIndex = 2;
+            this.metroTabControl1.Size = new System.Drawing.Size(799, 588);
+            this.metroTabControl1.TabIndex = 0;
+            this.metroTabControl1.UseSelectable = true;
+            // 
+            // metroTabPage1
+            // 
+            this.metroTabPage1.Controls.Add(this.cpbTempature);
+            this.metroTabPage1.Controls.Add(this.cpbVoltage);
+            this.metroTabPage1.Controls.Add(this.cpbCapacity);
+            this.metroTabPage1.Controls.Add(this.circularProgressBar1);
+            this.metroTabPage1.Controls.Add(this.cpbStateofHealth);
+            this.metroTabPage1.Controls.Add(this.cpbStateofCharge);
+            this.metroTabPage1.Controls.Add(this.cpbAverageCurrent);
+            this.metroTabPage1.Controls.Add(this.cpbAveragePower);
+            this.metroTabPage1.Controls.Add(this.cpbChargingCurrent);
+            this.metroTabPage1.Controls.Add(this.cpbChargingVoltage);
+            this.metroTabPage1.Controls.Add(this.flowLayoutPanel5);
+            this.metroTabPage1.HorizontalScrollbarBarColor = true;
+            this.metroTabPage1.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage1.HorizontalScrollbarSize = 10;
+            this.metroTabPage1.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage1.Name = "metroTabPage1";
+            this.metroTabPage1.Size = new System.Drawing.Size(791, 546);
+            this.metroTabPage1.TabIndex = 0;
+            this.metroTabPage1.Text = "Gauges";
+            this.metroTabPage1.VerticalScrollbarBarColor = true;
+            this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage1.VerticalScrollbarSize = 10;
             // 
             // cpbTempature
             // 
@@ -678,7 +711,7 @@ namespace Apple_Battery_Check
             this.cpbTempature.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.cpbTempature.InnerMargin = 1;
             this.cpbTempature.InnerWidth = -1;
-            this.cpbTempature.Location = new System.Drawing.Point(3, 3);
+            this.cpbTempature.Location = new System.Drawing.Point(0, 3);
             this.cpbTempature.MarqueeAnimationSpeed = 2000;
             this.cpbTempature.Name = "cpbTempature";
             this.cpbTempature.OuterColor = System.Drawing.Color.Gray;
@@ -695,7 +728,7 @@ namespace Apple_Battery_Check
             this.cpbTempature.SuperscriptColor = System.Drawing.Color.Red;
             this.cpbTempature.SuperscriptMargin = new System.Windows.Forms.Padding(0);
             this.cpbTempature.SuperscriptText = "";
-            this.cpbTempature.TabIndex = 0;
+            this.cpbTempature.TabIndex = 15;
             this.cpbTempature.Text = "Tempature";
             this.cpbTempature.TextMargin = new System.Windows.Forms.Padding(0);
             this.cpbTempature.Value = 1;
@@ -710,7 +743,7 @@ namespace Apple_Battery_Check
             this.cpbVoltage.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.cpbVoltage.InnerMargin = 1;
             this.cpbVoltage.InnerWidth = -1;
-            this.cpbVoltage.Location = new System.Drawing.Point(159, 3);
+            this.cpbVoltage.Location = new System.Drawing.Point(156, 3);
             this.cpbVoltage.MarqueeAnimationSpeed = 2000;
             this.cpbVoltage.Name = "cpbVoltage";
             this.cpbVoltage.OuterColor = System.Drawing.Color.Gray;
@@ -727,7 +760,7 @@ namespace Apple_Battery_Check
             this.cpbVoltage.SuperscriptColor = System.Drawing.Color.Red;
             this.cpbVoltage.SuperscriptMargin = new System.Windows.Forms.Padding(0);
             this.cpbVoltage.SuperscriptText = "";
-            this.cpbVoltage.TabIndex = 1;
+            this.cpbVoltage.TabIndex = 16;
             this.cpbVoltage.Text = "Voltage";
             this.cpbVoltage.TextMargin = new System.Windows.Forms.Padding(0);
             this.cpbVoltage.Value = 1;
@@ -742,7 +775,7 @@ namespace Apple_Battery_Check
             this.cpbCapacity.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.cpbCapacity.InnerMargin = 1;
             this.cpbCapacity.InnerWidth = -1;
-            this.cpbCapacity.Location = new System.Drawing.Point(315, 3);
+            this.cpbCapacity.Location = new System.Drawing.Point(312, 3);
             this.cpbCapacity.MarqueeAnimationSpeed = 2000;
             this.cpbCapacity.Name = "cpbCapacity";
             this.cpbCapacity.OuterColor = System.Drawing.Color.Gray;
@@ -759,170 +792,42 @@ namespace Apple_Battery_Check
             this.cpbCapacity.SuperscriptColor = System.Drawing.Color.Red;
             this.cpbCapacity.SuperscriptMargin = new System.Windows.Forms.Padding(0);
             this.cpbCapacity.SuperscriptText = "";
-            this.cpbCapacity.TabIndex = 2;
+            this.cpbCapacity.TabIndex = 17;
             this.cpbCapacity.Text = "Capacity";
             this.cpbCapacity.TextMargin = new System.Windows.Forms.Padding(0);
             this.cpbCapacity.Value = 1;
             // 
-            // cpbChargingCurrent
+            // circularProgressBar1
             // 
-            this.cpbChargingCurrent.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.cpbChargingCurrent.AnimationSpeed = 500;
-            this.cpbChargingCurrent.BackColor = System.Drawing.Color.Transparent;
-            this.cpbChargingCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.cpbChargingCurrent.ForeColor = System.Drawing.Color.DarkCyan;
-            this.cpbChargingCurrent.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.cpbChargingCurrent.InnerMargin = 1;
-            this.cpbChargingCurrent.InnerWidth = -1;
-            this.cpbChargingCurrent.Location = new System.Drawing.Point(3, 159);
-            this.cpbChargingCurrent.MarqueeAnimationSpeed = 2000;
-            this.cpbChargingCurrent.Name = "cpbChargingCurrent";
-            this.cpbChargingCurrent.OuterColor = System.Drawing.Color.Gray;
-            this.cpbChargingCurrent.OuterMargin = -15;
-            this.cpbChargingCurrent.OuterWidth = 15;
-            this.cpbChargingCurrent.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.cpbChargingCurrent.ProgressWidth = 15;
-            this.cpbChargingCurrent.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.cpbChargingCurrent.Size = new System.Drawing.Size(150, 150);
-            this.cpbChargingCurrent.StartAngle = 270;
-            this.cpbChargingCurrent.SubscriptColor = System.Drawing.Color.Red;
-            this.cpbChargingCurrent.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbChargingCurrent.SubscriptText = "";
-            this.cpbChargingCurrent.SuperscriptColor = System.Drawing.Color.Red;
-            this.cpbChargingCurrent.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbChargingCurrent.SuperscriptText = "";
-            this.cpbChargingCurrent.TabIndex = 3;
-            this.cpbChargingCurrent.Text = "Charging Current";
-            this.cpbChargingCurrent.TextMargin = new System.Windows.Forms.Padding(0);
-            this.cpbChargingCurrent.Value = 1;
-            // 
-            // cpbChargingVoltage
-            // 
-            this.cpbChargingVoltage.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.cpbChargingVoltage.AnimationSpeed = 500;
-            this.cpbChargingVoltage.BackColor = System.Drawing.Color.Transparent;
-            this.cpbChargingVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.cpbChargingVoltage.ForeColor = System.Drawing.Color.DarkCyan;
-            this.cpbChargingVoltage.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.cpbChargingVoltage.InnerMargin = 1;
-            this.cpbChargingVoltage.InnerWidth = -1;
-            this.cpbChargingVoltage.Location = new System.Drawing.Point(159, 159);
-            this.cpbChargingVoltage.MarqueeAnimationSpeed = 2000;
-            this.cpbChargingVoltage.Name = "cpbChargingVoltage";
-            this.cpbChargingVoltage.OuterColor = System.Drawing.Color.Gray;
-            this.cpbChargingVoltage.OuterMargin = -15;
-            this.cpbChargingVoltage.OuterWidth = 15;
-            this.cpbChargingVoltage.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.cpbChargingVoltage.ProgressWidth = 15;
-            this.cpbChargingVoltage.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.cpbChargingVoltage.Size = new System.Drawing.Size(150, 150);
-            this.cpbChargingVoltage.StartAngle = 270;
-            this.cpbChargingVoltage.SubscriptColor = System.Drawing.Color.Red;
-            this.cpbChargingVoltage.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbChargingVoltage.SubscriptText = "";
-            this.cpbChargingVoltage.SuperscriptColor = System.Drawing.Color.Red;
-            this.cpbChargingVoltage.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbChargingVoltage.SuperscriptText = "";
-            this.cpbChargingVoltage.TabIndex = 5;
-            this.cpbChargingVoltage.Text = "Charging Voltage";
-            this.cpbChargingVoltage.TextMargin = new System.Windows.Forms.Padding(0);
-            this.cpbChargingVoltage.Value = 1;
-            // 
-            // cpbStateofCharge
-            // 
-            this.cpbStateofCharge.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.cpbStateofCharge.AnimationSpeed = 500;
-            this.cpbStateofCharge.BackColor = System.Drawing.Color.Transparent;
-            this.cpbStateofCharge.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.cpbStateofCharge.ForeColor = System.Drawing.Color.DarkCyan;
-            this.cpbStateofCharge.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.cpbStateofCharge.InnerMargin = 1;
-            this.cpbStateofCharge.InnerWidth = -1;
-            this.cpbStateofCharge.Location = new System.Drawing.Point(315, 159);
-            this.cpbStateofCharge.MarqueeAnimationSpeed = 2000;
-            this.cpbStateofCharge.Name = "cpbStateofCharge";
-            this.cpbStateofCharge.OuterColor = System.Drawing.Color.Gray;
-            this.cpbStateofCharge.OuterMargin = -15;
-            this.cpbStateofCharge.OuterWidth = 15;
-            this.cpbStateofCharge.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.cpbStateofCharge.ProgressWidth = 15;
-            this.cpbStateofCharge.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.cpbStateofCharge.Size = new System.Drawing.Size(150, 150);
-            this.cpbStateofCharge.StartAngle = 270;
-            this.cpbStateofCharge.SubscriptColor = System.Drawing.Color.Red;
-            this.cpbStateofCharge.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbStateofCharge.SubscriptText = "";
-            this.cpbStateofCharge.SuperscriptColor = System.Drawing.Color.Red;
-            this.cpbStateofCharge.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbStateofCharge.SuperscriptText = "";
-            this.cpbStateofCharge.TabIndex = 6;
-            this.cpbStateofCharge.Text = "State of Charge";
-            this.cpbStateofCharge.TextMargin = new System.Windows.Forms.Padding(0);
-            this.cpbStateofCharge.Value = 1;
-            // 
-            // cpbAverageCurrent
-            // 
-            this.cpbAverageCurrent.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.cpbAverageCurrent.AnimationSpeed = 500;
-            this.cpbAverageCurrent.BackColor = System.Drawing.Color.Transparent;
-            this.cpbAverageCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.cpbAverageCurrent.ForeColor = System.Drawing.Color.DarkCyan;
-            this.cpbAverageCurrent.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.cpbAverageCurrent.InnerMargin = 1;
-            this.cpbAverageCurrent.InnerWidth = -1;
-            this.cpbAverageCurrent.Location = new System.Drawing.Point(3, 315);
-            this.cpbAverageCurrent.MarqueeAnimationSpeed = 2000;
-            this.cpbAverageCurrent.Name = "cpbAverageCurrent";
-            this.cpbAverageCurrent.OuterColor = System.Drawing.Color.Gray;
-            this.cpbAverageCurrent.OuterMargin = -15;
-            this.cpbAverageCurrent.OuterWidth = 15;
-            this.cpbAverageCurrent.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.cpbAverageCurrent.ProgressWidth = 15;
-            this.cpbAverageCurrent.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.cpbAverageCurrent.Size = new System.Drawing.Size(150, 150);
-            this.cpbAverageCurrent.StartAngle = 270;
-            this.cpbAverageCurrent.SubscriptColor = System.Drawing.Color.Red;
-            this.cpbAverageCurrent.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbAverageCurrent.SubscriptText = "";
-            this.cpbAverageCurrent.SuperscriptColor = System.Drawing.Color.Red;
-            this.cpbAverageCurrent.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbAverageCurrent.SuperscriptText = "";
-            this.cpbAverageCurrent.TabIndex = 7;
-            this.cpbAverageCurrent.Text = "Average Current";
-            this.cpbAverageCurrent.TextMargin = new System.Windows.Forms.Padding(0);
-            this.cpbAverageCurrent.Value = 1;
-            // 
-            // cpbAveragePower
-            // 
-            this.cpbAveragePower.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.cpbAveragePower.AnimationSpeed = 500;
-            this.cpbAveragePower.BackColor = System.Drawing.Color.Transparent;
-            this.cpbAveragePower.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.cpbAveragePower.ForeColor = System.Drawing.Color.DarkCyan;
-            this.cpbAveragePower.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.cpbAveragePower.InnerMargin = 1;
-            this.cpbAveragePower.InnerWidth = -1;
-            this.cpbAveragePower.Location = new System.Drawing.Point(159, 315);
-            this.cpbAveragePower.MarqueeAnimationSpeed = 2000;
-            this.cpbAveragePower.Name = "cpbAveragePower";
-            this.cpbAveragePower.OuterColor = System.Drawing.Color.Gray;
-            this.cpbAveragePower.OuterMargin = -15;
-            this.cpbAveragePower.OuterWidth = 15;
-            this.cpbAveragePower.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.cpbAveragePower.ProgressWidth = 15;
-            this.cpbAveragePower.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.cpbAveragePower.Size = new System.Drawing.Size(150, 150);
-            this.cpbAveragePower.StartAngle = 270;
-            this.cpbAveragePower.SubscriptColor = System.Drawing.Color.Red;
-            this.cpbAveragePower.SubscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbAveragePower.SubscriptText = "";
-            this.cpbAveragePower.SuperscriptColor = System.Drawing.Color.Red;
-            this.cpbAveragePower.SuperscriptMargin = new System.Windows.Forms.Padding(0);
-            this.cpbAveragePower.SuperscriptText = "";
-            this.cpbAveragePower.TabIndex = 8;
-            this.cpbAveragePower.Text = "Average Power";
-            this.cpbAveragePower.TextMargin = new System.Windows.Forms.Padding(0);
-            this.cpbAveragePower.Value = 1;
+            this.circularProgressBar1.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.circularProgressBar1.AnimationSpeed = 500;
+            this.circularProgressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.circularProgressBar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.circularProgressBar1.ForeColor = System.Drawing.Color.DarkCyan;
+            this.circularProgressBar1.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.circularProgressBar1.InnerMargin = 1;
+            this.circularProgressBar1.InnerWidth = -1;
+            this.circularProgressBar1.Location = new System.Drawing.Point(468, 3);
+            this.circularProgressBar1.MarqueeAnimationSpeed = 2000;
+            this.circularProgressBar1.Name = "circularProgressBar1";
+            this.circularProgressBar1.OuterColor = System.Drawing.Color.Gray;
+            this.circularProgressBar1.OuterMargin = -15;
+            this.circularProgressBar1.OuterWidth = 15;
+            this.circularProgressBar1.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.circularProgressBar1.ProgressWidth = 15;
+            this.circularProgressBar1.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.circularProgressBar1.Size = new System.Drawing.Size(150, 150);
+            this.circularProgressBar1.StartAngle = 270;
+            this.circularProgressBar1.SubscriptColor = System.Drawing.Color.Red;
+            this.circularProgressBar1.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.circularProgressBar1.SubscriptText = "";
+            this.circularProgressBar1.SuperscriptColor = System.Drawing.Color.Red;
+            this.circularProgressBar1.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.circularProgressBar1.SuperscriptText = "";
+            this.circularProgressBar1.TabIndex = 25;
+            this.circularProgressBar1.Text = "FCC";
+            this.circularProgressBar1.TextMargin = new System.Windows.Forms.Padding(0);
+            this.circularProgressBar1.Value = 1;
             // 
             // cpbStateofHealth
             // 
@@ -934,7 +839,7 @@ namespace Apple_Battery_Check
             this.cpbStateofHealth.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.cpbStateofHealth.InnerMargin = 1;
             this.cpbStateofHealth.InnerWidth = -1;
-            this.cpbStateofHealth.Location = new System.Drawing.Point(315, 315);
+            this.cpbStateofHealth.Location = new System.Drawing.Point(624, 3);
             this.cpbStateofHealth.MarqueeAnimationSpeed = 2000;
             this.cpbStateofHealth.Name = "cpbStateofHealth";
             this.cpbStateofHealth.OuterColor = System.Drawing.Color.Gray;
@@ -951,21 +856,211 @@ namespace Apple_Battery_Check
             this.cpbStateofHealth.SuperscriptColor = System.Drawing.Color.Red;
             this.cpbStateofHealth.SuperscriptMargin = new System.Windows.Forms.Padding(0);
             this.cpbStateofHealth.SuperscriptText = "";
-            this.cpbStateofHealth.TabIndex = 9;
+            this.cpbStateofHealth.TabIndex = 23;
             this.cpbStateofHealth.Text = "State of Health";
             this.cpbStateofHealth.TextMargin = new System.Windows.Forms.Padding(0);
             this.cpbStateofHealth.Value = 1;
             // 
-            // timer1
+            // cpbStateofCharge
             // 
-            this.timer1.Interval = 3000;
-            this.timer1.Tick += new System.EventHandler(this.BtnRead_Click);
+            this.cpbStateofCharge.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbStateofCharge.AnimationSpeed = 500;
+            this.cpbStateofCharge.BackColor = System.Drawing.Color.Transparent;
+            this.cpbStateofCharge.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbStateofCharge.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbStateofCharge.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbStateofCharge.InnerMargin = 1;
+            this.cpbStateofCharge.InnerWidth = -1;
+            this.cpbStateofCharge.Location = new System.Drawing.Point(0, 159);
+            this.cpbStateofCharge.MarqueeAnimationSpeed = 2000;
+            this.cpbStateofCharge.Name = "cpbStateofCharge";
+            this.cpbStateofCharge.OuterColor = System.Drawing.Color.Gray;
+            this.cpbStateofCharge.OuterMargin = -15;
+            this.cpbStateofCharge.OuterWidth = 15;
+            this.cpbStateofCharge.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbStateofCharge.ProgressWidth = 15;
+            this.cpbStateofCharge.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbStateofCharge.Size = new System.Drawing.Size(150, 150);
+            this.cpbStateofCharge.StartAngle = 270;
+            this.cpbStateofCharge.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbStateofCharge.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbStateofCharge.SubscriptText = "";
+            this.cpbStateofCharge.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbStateofCharge.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbStateofCharge.SuperscriptText = "";
+            this.cpbStateofCharge.TabIndex = 20;
+            this.cpbStateofCharge.Text = "State of Charge";
+            this.cpbStateofCharge.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbStateofCharge.Value = 1;
+            // 
+            // cpbAverageCurrent
+            // 
+            this.cpbAverageCurrent.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbAverageCurrent.AnimationSpeed = 500;
+            this.cpbAverageCurrent.BackColor = System.Drawing.Color.Transparent;
+            this.cpbAverageCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbAverageCurrent.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbAverageCurrent.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbAverageCurrent.InnerMargin = 1;
+            this.cpbAverageCurrent.InnerWidth = -1;
+            this.cpbAverageCurrent.Location = new System.Drawing.Point(156, 159);
+            this.cpbAverageCurrent.MarqueeAnimationSpeed = 2000;
+            this.cpbAverageCurrent.Name = "cpbAverageCurrent";
+            this.cpbAverageCurrent.OuterColor = System.Drawing.Color.Gray;
+            this.cpbAverageCurrent.OuterMargin = -15;
+            this.cpbAverageCurrent.OuterWidth = 15;
+            this.cpbAverageCurrent.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbAverageCurrent.ProgressWidth = 15;
+            this.cpbAverageCurrent.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbAverageCurrent.Size = new System.Drawing.Size(150, 150);
+            this.cpbAverageCurrent.StartAngle = 270;
+            this.cpbAverageCurrent.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbAverageCurrent.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbAverageCurrent.SubscriptText = "";
+            this.cpbAverageCurrent.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbAverageCurrent.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbAverageCurrent.SuperscriptText = "";
+            this.cpbAverageCurrent.TabIndex = 21;
+            this.cpbAverageCurrent.Text = "Average Current";
+            this.cpbAverageCurrent.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbAverageCurrent.Value = 1;
+            // 
+            // cpbAveragePower
+            // 
+            this.cpbAveragePower.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbAveragePower.AnimationSpeed = 500;
+            this.cpbAveragePower.BackColor = System.Drawing.Color.Transparent;
+            this.cpbAveragePower.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbAveragePower.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbAveragePower.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbAveragePower.InnerMargin = 1;
+            this.cpbAveragePower.InnerWidth = -1;
+            this.cpbAveragePower.Location = new System.Drawing.Point(312, 159);
+            this.cpbAveragePower.MarqueeAnimationSpeed = 2000;
+            this.cpbAveragePower.Name = "cpbAveragePower";
+            this.cpbAveragePower.OuterColor = System.Drawing.Color.Gray;
+            this.cpbAveragePower.OuterMargin = -15;
+            this.cpbAveragePower.OuterWidth = 15;
+            this.cpbAveragePower.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbAveragePower.ProgressWidth = 15;
+            this.cpbAveragePower.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbAveragePower.Size = new System.Drawing.Size(150, 150);
+            this.cpbAveragePower.StartAngle = 270;
+            this.cpbAveragePower.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbAveragePower.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbAveragePower.SubscriptText = "";
+            this.cpbAveragePower.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbAveragePower.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbAveragePower.SuperscriptText = "";
+            this.cpbAveragePower.TabIndex = 22;
+            this.cpbAveragePower.Text = "Average Power";
+            this.cpbAveragePower.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbAveragePower.Value = 1;
+            // 
+            // cpbChargingCurrent
+            // 
+            this.cpbChargingCurrent.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbChargingCurrent.AnimationSpeed = 500;
+            this.cpbChargingCurrent.BackColor = System.Drawing.Color.Transparent;
+            this.cpbChargingCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbChargingCurrent.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbChargingCurrent.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbChargingCurrent.InnerMargin = 1;
+            this.cpbChargingCurrent.InnerWidth = -1;
+            this.cpbChargingCurrent.Location = new System.Drawing.Point(468, 159);
+            this.cpbChargingCurrent.MarqueeAnimationSpeed = 2000;
+            this.cpbChargingCurrent.Name = "cpbChargingCurrent";
+            this.cpbChargingCurrent.OuterColor = System.Drawing.Color.Gray;
+            this.cpbChargingCurrent.OuterMargin = -15;
+            this.cpbChargingCurrent.OuterWidth = 15;
+            this.cpbChargingCurrent.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbChargingCurrent.ProgressWidth = 15;
+            this.cpbChargingCurrent.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbChargingCurrent.Size = new System.Drawing.Size(150, 150);
+            this.cpbChargingCurrent.StartAngle = 270;
+            this.cpbChargingCurrent.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbChargingCurrent.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbChargingCurrent.SubscriptText = "";
+            this.cpbChargingCurrent.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbChargingCurrent.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbChargingCurrent.SuperscriptText = "";
+            this.cpbChargingCurrent.TabIndex = 18;
+            this.cpbChargingCurrent.Text = "Charging Current";
+            this.cpbChargingCurrent.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbChargingCurrent.Value = 1;
+            // 
+            // cpbChargingVoltage
+            // 
+            this.cpbChargingVoltage.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.cpbChargingVoltage.AnimationSpeed = 500;
+            this.cpbChargingVoltage.BackColor = System.Drawing.Color.Transparent;
+            this.cpbChargingVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.cpbChargingVoltage.ForeColor = System.Drawing.Color.DarkCyan;
+            this.cpbChargingVoltage.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cpbChargingVoltage.InnerMargin = 1;
+            this.cpbChargingVoltage.InnerWidth = -1;
+            this.cpbChargingVoltage.Location = new System.Drawing.Point(624, 159);
+            this.cpbChargingVoltage.MarqueeAnimationSpeed = 2000;
+            this.cpbChargingVoltage.Name = "cpbChargingVoltage";
+            this.cpbChargingVoltage.OuterColor = System.Drawing.Color.Gray;
+            this.cpbChargingVoltage.OuterMargin = -15;
+            this.cpbChargingVoltage.OuterWidth = 15;
+            this.cpbChargingVoltage.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cpbChargingVoltage.ProgressWidth = 15;
+            this.cpbChargingVoltage.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.cpbChargingVoltage.Size = new System.Drawing.Size(150, 150);
+            this.cpbChargingVoltage.StartAngle = 270;
+            this.cpbChargingVoltage.SubscriptColor = System.Drawing.Color.Red;
+            this.cpbChargingVoltage.SubscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbChargingVoltage.SubscriptText = "";
+            this.cpbChargingVoltage.SuperscriptColor = System.Drawing.Color.Red;
+            this.cpbChargingVoltage.SuperscriptMargin = new System.Windows.Forms.Padding(0);
+            this.cpbChargingVoltage.SuperscriptText = "";
+            this.cpbChargingVoltage.TabIndex = 19;
+            this.cpbChargingVoltage.Text = "Charging Voltage";
+            this.cpbChargingVoltage.TextMargin = new System.Windows.Forms.Padding(0);
+            this.cpbChargingVoltage.Value = 1;
+            // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(0, 315);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(790, 100);
+            this.flowLayoutPanel5.TabIndex = 24;
+            // 
+            // metroTabPage2
+            // 
+            this.metroTabPage2.HorizontalScrollbarBarColor = true;
+            this.metroTabPage2.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage2.HorizontalScrollbarSize = 10;
+            this.metroTabPage2.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage2.Name = "metroTabPage2";
+            this.metroTabPage2.Size = new System.Drawing.Size(791, 546);
+            this.metroTabPage2.TabIndex = 1;
+            this.metroTabPage2.Text = "Seal/Unseal";
+            this.metroTabPage2.VerticalScrollbarBarColor = true;
+            this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage2.VerticalScrollbarSize = 10;
+            // 
+            // metroTabPage3
+            // 
+            this.metroTabPage3.HorizontalScrollbarBarColor = true;
+            this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage3.HorizontalScrollbarSize = 10;
+            this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage3.Name = "metroTabPage3";
+            this.metroTabPage3.Size = new System.Drawing.Size(791, 546);
+            this.metroTabPage3.TabIndex = 2;
+            this.metroTabPage3.Text = "Send Commands";
+            this.metroTabPage3.VerticalScrollbarBarColor = true;
+            this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage3.VerticalScrollbarSize = 10;
             // 
             // BatteryCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1239, 854);
+            this.ClientSize = new System.Drawing.Size(1238, 854);
             this.Controls.Add(this.flowLayoutPanel4);
             this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.flowLayoutPanel2);
@@ -987,6 +1082,8 @@ namespace Apple_Battery_Check
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             this.flowLayoutPanel4.ResumeLayout(false);
+            this.metroTabControl1.ResumeLayout(false);
+            this.metroTabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1033,22 +1130,27 @@ namespace Apple_Battery_Check
         private System.Windows.Forms.Label lblManufacturerBlockB;
         private System.Windows.Forms.Label lManufacturerBlockC;
         private System.Windows.Forms.Label lblManufacturerBlockC;
-        private System.Windows.Forms.Label lChecksum;
-        private System.Windows.Forms.Label lblChecksum;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
-        private CircularProgressBar.CircularProgressBar cpbTempature;
-        private CircularProgressBar.CircularProgressBar cpbVoltage;
-        private CircularProgressBar.CircularProgressBar cpbCapacity;
-        private CircularProgressBar.CircularProgressBar cpbChargingCurrent;
-        private CircularProgressBar.CircularProgressBar cpbChargingVoltage;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
-        private CircularProgressBar.CircularProgressBar cpbStateofCharge;
-        private CircularProgressBar.CircularProgressBar cpbAverageCurrent;
-        private CircularProgressBar.CircularProgressBar cpbAveragePower;
-        private CircularProgressBar.CircularProgressBar cpbStateofHealth;
+        private System.Windows.Forms.Label lTimeToEmpty;
+        private System.Windows.Forms.Label lblTimeToEmpty;
         private MetroFramework.Controls.MetroButton btnWatch;
         private MetroFramework.Controls.MetroButton btnStop;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+        private MetroFramework.Controls.MetroTabControl metroTabControl1;
+        private MetroFramework.Controls.MetroTabPage metroTabPage1;
+        private CircularProgressBar.CircularProgressBar cpbTempature;
+        private CircularProgressBar.CircularProgressBar cpbVoltage;
+        private CircularProgressBar.CircularProgressBar cpbCapacity;
+        private CircularProgressBar.CircularProgressBar circularProgressBar1;
+        private CircularProgressBar.CircularProgressBar cpbStateofHealth;
+        private CircularProgressBar.CircularProgressBar cpbStateofCharge;
+        private CircularProgressBar.CircularProgressBar cpbAverageCurrent;
+        private CircularProgressBar.CircularProgressBar cpbAveragePower;
+        private CircularProgressBar.CircularProgressBar cpbChargingCurrent;
+        private CircularProgressBar.CircularProgressBar cpbChargingVoltage;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
+        private MetroFramework.Controls.MetroTabPage metroTabPage2;
+        private MetroFramework.Controls.MetroTabPage metroTabPage3;
     }
 }
 

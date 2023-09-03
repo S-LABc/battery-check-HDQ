@@ -155,7 +155,7 @@ namespace Apple_Battery_Check
             cpbStateofHealth.SubscriptText = cpbStateofHealth.Value + Resources.SUFFIX_PERCENT;
 
             cpbChargingVoltage.Maximum = 6000;
-            cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);
+            cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);//fix gerekli
             cpbChargingVoltage.SubscriptText = cpbChargingVoltage.Value + Resources.SUFFIX_VOLTAGE_MV;
 
             cpbChargingCurrent.Maximum = 7000;
@@ -189,7 +189,7 @@ namespace Apple_Battery_Check
             lblManufacturerBlockA.Text = batteryPack.ManufacturerBlockA;
             lblManufacturerBlockB.Text = batteryPack.ManufacturerBlockB;
             lblManufacturerBlockC.Text = batteryPack.ManufacturerBlockC;
-            lblChecksum.Text = (batteryPack.TimeToEmpty == 65535) ? "Not Discharging" : batteryPack.TimeToEmpty.ToString() +" minutes remaining";
+            lblTimeToEmpty.Text = (batteryPack.TimeToEmpty == 65535) ? "Not Discharging" : batteryPack.TimeToEmpty.ToString() +" minutes remaining";
 
 
             ////HESAPLANAN VERİLER
