@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            // TODO :Referanslara ekle. stringden gelen veri tiplerini dönüştürme.
             //string strValue = "65535";
             //string strValue = "1";
             //string strValue = "-1";
@@ -22,11 +23,11 @@
         {
             if (int.TryParse(strValue, out int intValue))
             {
-                // Integer değeri 2 bayta çevirme
+                // Integer değeri 2 bayta çevirme 
                 byte[] bytes = BitConverter.GetBytes((short)intValue);
 
                 //if (BitConverter.IsLittleEndian)
-                //{
+                //{// eğer veri string değil byte olsaydı.
                 //    // Küçük endian (little-endian) sistemler için baytları ters çevirme
                 //    Array.Reverse(bytes);
                 //}

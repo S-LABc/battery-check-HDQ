@@ -261,7 +261,6 @@ namespace Apple_Battery_Check
             Console.WriteLine(dataReceived);
             string[] tempSplited = dataReceived.Split(Settings.Default.SEPARATOR_SLASH);
             batteryPack.UpdateData(dataReceived);
-            LabelDataAdd(tempSplited);
             try
             {
                 batteryPack.UpdateData(dataReceived);
@@ -301,6 +300,7 @@ namespace Apple_Battery_Check
         private void ledBulb1_Click(object sender, EventArgs e)
         {
             //((LedBulb)sender).On = !((LedBulb)sender).On;
+            //or
             if (_blink == 0) _blink = 500;
             else _blink = 0;
             ((LedBulb)sender).Blink(_blink);
@@ -308,7 +308,7 @@ namespace Apple_Battery_Check
 
         private void btnWatch_Click(object sender, EventArgs e)
         {
-            timer1.Start();
+            timer1.Start();// event burada eklenebilir
         }
 
         private void btnStop_Click(object sender, EventArgs e)
