@@ -1,27 +1,58 @@
 ﻿using Apple_Battery_Check.Properties;
+using Bulb;
 using MetroFramework;
 using MetroFramework.Forms;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+
 namespace Apple_Battery_Check
 {
+    public enum ControlStatus
+    {
+        QEN, VOK, RUP_DIS, LDMD, SLEEP, FULLSLEEP, HIBERNATE, SHUTDN_EN,
+        HOSTIE, QMAXUPDATE, BCA, CCA, CALMODE, SS, FAS, SE_EN
+    }
+
+
     public partial class BatteryCheck : MetroForm
     {
+        private Dictionary<ControlStatus, string> ControlStatusDescriptions = new Dictionary<ControlStatus, string>
+        {
+            { ControlStatus.SE_EN, "Status bit indicating if shutdown is active" },
+            { ControlStatus.FAS, "Status bit indicating the fuel gauge is in FULL ACCESS SEALED state. Active when set (no data flash access)." },
+            { ControlStatus.SS, "Status bit indicating the fuel gauge is in the SEALED state. Active when set (no ROM access)." },
+            { ControlStatus.CALMODE, "Status bit indicating the calibration function is active. True when set. Default is 0." },
+            { ControlStatus.CCA, "Status bit indicating the Coulomb Counter Calibration routine is active. The CCA routine takes place approximately 1 minute after the initialization and periodically as gauging conditions change. Active when set." },
+            { ControlStatus.BCA, "Status bit indicating the Board Calibration routine is active. Active when set." },
+            { ControlStatus.QMAXUPDATE, "Status bit toggling every time there is a QMAX update" },
+            { ControlStatus.HOSTIE, "Status bit indicating SET_HDQINTEN subcommand has been received and armed the HDQ Host interrupt" },
+            { ControlStatus.SHUTDN_EN, "Control bit indicating that the SET_SHUTDOWN subcommand has been sent and signals an external shutdown of the fuel gauge when conditions permit. See Section 2.4.1, SHUTDOWN Mode." },
+            { ControlStatus.HIBERNATE, "Status bit indicating a request for entry into HIBERNATE from SLEEP mode has been issued. True when set. Default is 0" },
+            { ControlStatus.FULLSLEEP, "Status bit indicating the fuel gauge is in FULLSLEEP mode. True when set. The state can be detected by monitoring the power used by the fuel gauge because any communication automatically clears it." },
+            { ControlStatus.SLEEP, "Status bit indicating the fuel gauge is in SLEEP mode. True when set." },
+            { ControlStatus.LDMD, "Status bit indicating the Impedance Track algorithm is using constant-power model. True when set. Default is 0 (constant-current model)." },
+            { ControlStatus.RUP_DIS, "Status bit indicating the Ra table updates are disabled. True when set." },
+            { ControlStatus.VOK, "Status bit indicating cell voltages are OK for Qmax updates. True when set." },
+            { ControlStatus.QEN, "Status bit indicating the Qmax updates are enabled. True when set." }
+        };
+        public BatteryPack batteryPack = new BatteryPack();
         public BatteryCheck()
         {
             InitializeComponent();
             ElemetsDefaultValue();
-            LabelDefaultValue();           
+            LabelDefaultValue();
             PortPreparation();
         }
 
-        //Заполнение полей данных прочерком
         private void LabelDefaultValue()
         {
             lblCycleCount.Text = Resources.LBL_DEFAULT_TEXT;
@@ -36,37 +67,26 @@ namespace Apple_Battery_Check
             lblHardwareVersion.Text = Resources.LBL_DEFAULT_TEXT;
         }
 
-        //Установка основных настроек для программы
         private void ElemetsDefaultValue()
         {
-            //Добавление элементов интерфесов
             cbInterface.Items.AddRange(new object[] {
             Resources.TEXT_HDQ,
             Resources.TEXT_I2C});
-            //Выбор последнего интерфейса выбранного пользователем
             cbInterface.Text = Settings.Default.INTERFACE_TYPE;
-            //Состояние сохранения считанных данных
             chbDataLog.Checked = Settings.Default.DATALOG_STATE;
-            //Установка скорости связи
             serialPortBAT.BaudRate = Settings.Default.SERIAL_BAUDRATE;
-            //Установка значка приложения
             Icon = Resources.Battery_Charging;
         }
 
-        //Подготовка и выбор порта в списке
         private void PortPreparation()
         {
-            //Заполнение массива найденными портами
             string[] ports = SerialPort.GetPortNames();
 
-            //Очистка и заполнение списка
             cbPrort.Items.Clear();
             cbPrort.Items.AddRange(ports);
 
-            //Если есть хоть один порт - выбрать его, иначе пустое поле
             cbPrort.SelectedIndex = (ports.Length != 0) ? 0 : -1;
 
-            //Активность кнопки в зависимости от наличия портов
             if (cbPrort.Text == string.Empty)
             {
                 btnRead.Enabled = false;
@@ -77,76 +97,150 @@ namespace Apple_Battery_Check
             }
         }
 
-        //Создание файла логов
         private void LogFileCreation()
         {
-            //Формирование содержимго файла логов
             string[] textData = {
                         cbInterface.Text,
-                        lDesignCapacity.Text + Resources.SPACE_TEXT +  lblDesignCapacity.Text,
-                        lStateOfCharge.Text + Resources.SPACE_TEXT + lblStateOfCharge.Text,
                         lCycleCount.Text + Resources.SPACE_TEXT + lblCycleCount.Text,
-                        lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text,
-                        lFullChargeCapacity.Text + Resources.SPACE_TEXT + lblFullChargeCapacity.Text,
-                        lRemainingCapacity.Text + Resources.SPACE_TEXT + lblRemainingCapacity.Text,
-                        lTemperature.Text + Resources.SPACE_TEXT + lblTemperature.Text,
+                        lDesignCapacity.Text + Resources.SPACE_TEXT +  lblDesignCapacity.Text,
                         lDeviceType.Text + Resources.SPACE_TEXT + lblDeviceType.Text,
+                        lFirmwareVersion.Text + Resources.SPACE_TEXT + lblFirmwareVersion.Text,
+                        lFullChargeCapacity.Text + Resources.SPACE_TEXT + lblFullChargeCapacity.Text,
                         lHardwareVersion.Text + Resources.SPACE_TEXT + lblHardwareVersion.Text,
-                        lFirmwareVersion.Text + Resources.SPACE_TEXT + lblFirmwareVersion.Text
+                        lRemainingCapacity.Text + Resources.SPACE_TEXT + lblRemainingCapacity.Text,
+                        lStateOfCharge.Text + Resources.SPACE_TEXT + lblStateOfCharge.Text,
+                        lTemperature.Text + Resources.SPACE_TEXT + lblTemperature.Text,
+                        lVoltage.Text + Resources.SPACE_TEXT + lblVoltage.Text,
+                        JsonConvert.SerializeObject(batteryPack, Formatting.Indented)
+
                      };
 
-            //Создать файл логов
             File.WriteAllLines(@".\" + DateTime.Now.ToString(Resources.FILE_NAME_FORMAT) + Resources.BOT_SLASH + cbInterface.Text + Resources.EXTANSION_FORMAT, textData, Encoding.UTF8);
         }
 
-        //
         private void LabelDataAdd(string[] addData)
         {
-            //Заполнение полей пересчитанными данными
-            lblCycleCount.Text = addData[4];
-            lblVoltage.Text = Convert.ToString(Convert.ToDouble(addData[1]) / Settings.Default.SHIFT_VOLTAGE) + Resources.SUFFIX_VOLTAGE;
-            lblTemperature.Text = Convert.ToString(Convert.ToDouble(addData[0]) * Settings.Default.DECIMAL_FACTOR - Settings.Default.CELSIUS_OFFSET) + Resources.SUFFIX_CELSIUS_DEGREE;
-            lblStateOfCharge.Text = addData[5] + Resources.SUFFIX_PERCENT;
-            lblDesignCapacity.Text = addData[6] + Resources.SUFFIX_CAPACITY;
-            lblFullChargeCapacity.Text = addData[3] + Resources.SUFFIX_CAPACITY;
-            lblRemainingCapacity.Text = addData[2] + Resources.SUFFIX_CAPACITY;
-            lblFirmwareVersion.Text = addData[8].Insert(1, Settings.Default.SEPARATOR_DOT);
-            lblHardwareVersion.Text = Resources.PREFIX_HEXADECIMAL + Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(addData[9].ToUpper());
-            lblDeviceType.Text = Resources.PREFIX_CONTROLLER + addData[7];
+            //STANDARD COMMANDS
+            lblTemperature.Text = batteryPack.TemperatureCelsius + Resources.SUFFIX_CELSIUS_DEGREE;
+            cpbTempature.Value = Convert.ToInt32(batteryPack.TemperatureCelsius);
+            cpbTempature.SubscriptText = lblTemperature.Text;
+            cpbTempature.SuperscriptText = batteryPack.TemperatureFahrenheit + " F";// TODO
+
+            lblVoltage.Text = batteryPack.Voltage + Resources.SUFFIX_VOLTAGE_MV; ;
+            cpbVoltage.Minimum = 3200;
+            cpbVoltage.Maximum = 4400;
+            cpbVoltage.Value = batteryPack.Voltage;//hack
+            cpbVoltage.SubscriptText = lblVoltage.Text;
+            cpbVoltage.SuperscriptText = batteryPack.Voltage / Settings.Default.SHIFT_VOLTAGE + Resources.SUFFIX_VOLTAGE;
+
+
+            lblRemainingCapacity.Text = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
+            lblFullChargeCapacity.Text = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
+            cpbCapacity.Minimum = 0;
+            cpbCapacity.Maximum = batteryPack.FullChargeCapacity;
+            cpbCapacity.Value = Convert.ToInt32(batteryPack.RemainingCapacity);
+            cpbCapacity.SubscriptText = batteryPack.RemainingCapacity + Resources.SUFFIX_CAPACITY;
+            cpbCapacity.SuperscriptText = batteryPack.FullChargeCapacity + Resources.SUFFIX_CAPACITY;
+
+            lblStateOfCharge.Text = batteryPack.StateOfCharge + Resources.SUFFIX_PERCENT;
+            cpbStateofCharge.Maximum = 100;
+            cpbStateofCharge.Value = Convert.ToInt32(batteryPack.StateOfCharge);
+            cpbStateofCharge.SubscriptText = lblStateOfCharge.Text;
+
+
+            int staohea = Convert.ToInt32(Convert.ToDouble(batteryPack.FullChargeCapacity) / Convert.ToDouble(batteryPack.DesignCapacity) * 100);
+            lblBatteryHealth.Text = staohea + Resources.SUFFIX_PERCENT;
+
+            cpbStateofHealth.Value = staohea;
+            cpbStateofHealth.SubscriptText = cpbStateofHealth.Value + Resources.SUFFIX_PERCENT;
+
+            cpbChargingVoltage.Maximum = 6000;
+            cpbChargingVoltage.Value = Convert.ToInt32(batteryPack.ChargingVoltage);//fix gerekli
+            cpbChargingVoltage.SubscriptText = cpbChargingVoltage.Value + Resources.SUFFIX_VOLTAGE_MV;
+
+            cpbChargingCurrent.Maximum = 7000;
+            cpbChargingCurrent.Value = Convert.ToInt32(batteryPack.ChargingCurrent);
+            cpbChargingCurrent.SubscriptText = cpbChargingCurrent.Value + Resources.SUFFIX_CURRENT_MA;
+
+            cpbAveragePower.Maximum = 30000;
+            cpbAveragePower.Maximum = (Math.Abs(batteryPack.AveragePower) > 30000) ? Math.Abs(batteryPack.AveragePower) : cpbAveragePower.Maximum;
+            cpbAveragePower.Value = Math.Abs(batteryPack.AveragePower);
+            cpbAveragePower.SubscriptText = cpbAveragePower.Value + Resources.SUFFIX_POWER_MW;
+
+            cpbAverageCurrent.Maximum = 3000;
+            cpbAverageCurrent.Maximum = (Math.Abs(batteryPack.AverageCurrent) > 3000 ) ? Math.Abs(batteryPack.AverageCurrent) : cpbAverageCurrent.Maximum;
+            cpbAverageCurrent.Value = Math.Abs(batteryPack.AverageCurrent);
+            cpbAverageCurrent.SubscriptText = cpbAverageCurrent.Value + Resources.SUFFIX_CURRENT_MA;
+
+            lblCycleCount.Text = batteryPack.CycleCount;
+
+
+            // +EXTENDED COMMAND
+            lblDesignCapacity.Text = batteryPack.DesignCapacity + Resources.SUFFIX_CAPACITY;
+
+            //CONTROL SUB COMMANDS
+            lblControlStatus.Text = batteryPack.ControlStatus;
+            lblDeviceType.Text = batteryPack.DeviceType;
+            lblFirmwareVersion.Text = batteryPack.FirmwareVersion;
+            lblHardwareVersion.Text = batteryPack.HardwareVersion;
+
+            //BLOCK COMMANDS
+
+            lblManufacturerBlockA.Text = batteryPack.ManufacturerBlockA;
+            lblManufacturerBlockB.Text = batteryPack.ManufacturerBlockB;
+            lblManufacturerBlockC.Text = batteryPack.ManufacturerBlockC;
+            lblTimeToEmpty.Text = (batteryPack.TimeToEmpty == 65535) ? "Not Discharging" : batteryPack.TimeToEmpty.ToString() +" minutes remaining";
+
+
+            ////HESAPLANAN VERİLER
+            //lblBatteryHealth.Text = ((Convert.ToDouble(addData[7]) / Convert.ToDouble(addData[27])) * 100).ToString("0.00") + Resources.SUFFIX_PERCENT;
+
+
+            UpdateBitStatus(Convert.ToUInt16(batteryPack.ControlStatus, 16));
+
         }
 
-        //Обновление списка портов
+        private void UpdateBitStatus(ushort receivedData)
+        {
+            flowLayoutPanel5.Controls.Clear(); // Önceki kutuları temizle
+            foreach (ControlStatus bit in Enum.GetValues(typeof(ControlStatus)))
+            {
+                string labelText = bit.ToString();
+                bool isActive = ((receivedData >> (int)bit) & 1) != 0;
+                Panel panel = new Panel
+                {
+                    Size = new System.Drawing.Size(90, 15),
+                    BackColor = isActive ? System.Drawing.Color.Green : System.Drawing.Color.OrangeRed,
+                    Controls = { new Label { Text = labelText, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill } }
+                };
+                flowLayoutPanel5.Controls.Add(panel);
+            }
+        }
+
         private void CbPrort_MouseClick(object sender, MouseEventArgs e)
         {
             PortPreparation();
         }
 
-        //Чтение данных из АКБ
         private void BtnRead_Click(object sender, EventArgs e)
         {
             try
             {
-                //Выбор порта
                 serialPortBAT.PortName = Convert.ToString(cbPrort.Text);
-
-                //Открыть соединение
                 serialPortBAT.Open();
 
                 if (cbInterface.Text == Resources.TEXT_HDQ)
                 {
-                    //Отправить ключ для HDQ
                     serialPortBAT.Write(Resources.KEY_HDQ);
                 }
                 else if (cbInterface.Text == Resources.TEXT_I2C)
                 {
-                    //Отправить ключ для I2C
                     serialPortBAT.Write(Resources.KEY_I2C);
                 }
             }
             catch
             {
                 serialPortBAT.Close();
-                //Сообщение об ошибке связи
                 MetroMessageBox.Show(this,
                     Messages.ERROR_RELATION,
                     Messages.ERROR,
@@ -155,26 +249,21 @@ namespace Apple_Battery_Check
             }
         }
 
-        //Делегат
         private delegate void ReceivedEvent(string data);
-
-        //Прием данных из порта
         private void SerialPortBAT_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            //Вызов метода выдачи значений через делегат 
             BeginInvoke(new ReceivedEvent(DataProcessing), serialPortBAT.ReadLine());
-
             serialPortBAT.Close();
         }
 
-        //Обработка принятых из порта данных
         private void DataProcessing(string dataReceived)
         {
-            //Разбить принятый пакет на элементы
+            Console.WriteLine(dataReceived);
             string[] tempSplited = dataReceived.Split(Settings.Default.SEPARATOR_SLASH);
-
+            batteryPack.UpdateData(dataReceived);
             try
             {
+                batteryPack.UpdateData(dataReceived);
                 LabelDataAdd(tempSplited);
 
                 if (chbDataLog.Checked)
@@ -184,7 +273,7 @@ namespace Apple_Battery_Check
             }
             catch
             {
-                LabelDefaultValue();
+                //LabelDefaultValue(); //hatamı yoksa veri alınmadımı belli olsun
                 MetroMessageBox.Show(this,
                     Messages.ERROR_DATA_TYPE,
                     Messages.ERROR,
@@ -193,25 +282,38 @@ namespace Apple_Battery_Check
             }
         }
 
-        //Обработка изменений типа интерфейса и сохранения данных в файл
         private void BatteryCheck_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //При изменении типа интерфейса или флага сохранения данных
             if (cbInterface.Text != Settings.Default.INTERFACE_TYPE || chbDataLog.Checked != Settings.Default.DATALOG_STATE)
             {
-                //Переписать новое значение интефейса и флага данных
                 Settings.Default.INTERFACE_TYPE = cbInterface.Text;
                 Settings.Default.DATALOG_STATE = chbDataLog.Checked;
-
-                //Сохранить новые настройки
                 Settings.Default.Save();
             }
         }
 
         private void YT_Click(object sender, EventArgs e)
         {
-            //Вызов метода перехода по ссылке
-            Process.Start("https://www.youtube.com/c/SLABORATORY");
+            ledBulb1.On = !ledBulb1.On;
+        }
+        private int _blink = 0;
+        private void ledBulb1_Click(object sender, EventArgs e)
+        {
+            //((LedBulb)sender).On = !((LedBulb)sender).On;
+            //or
+            if (_blink == 0) _blink = 500;
+            else _blink = 0;
+            ((LedBulb)sender).Blink(_blink);
+        }
+
+        private void btnWatch_Click(object sender, EventArgs e)
+        {
+            timer1.Start();// event burada eklenebilir
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
         }
     }
 }

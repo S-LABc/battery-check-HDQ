@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ERROR" xml:space="preserve">
-    <value>Ошибка</value>
-    <comment>Заголовок окна с ошибкой</comment>
+    <value>Hata</value>
+    <comment>Hata Penceresi Başlığı</comment>
   </data>
   <data name="ERROR_DATA_TYPE" xml:space="preserve">
-    <value>Неверный формат принятых данных. Проверьте правильно ли выбрать протокол и повторите попытку</value>
-    <comment>Текст ошибки формата данных</comment>
+    <value>Alınan verilerin formatı yanlış. Lütfen protokolü doğru seçip tekrar deneyin</value>
+    <comment>Veri formatı hatası metni</comment>
   </data>
   <data name="ERROR_RELATION" xml:space="preserve">
-    <value>Не удалось установить соединение. Проверьте подключение и повторите попытку</value>
-    <comment>Текст ошибки связи</comment>
+    <value>Bağlantı kurulamadı. Bağlantıyı kontrol edin ve tekrar deneyin</value>
+    <comment>Bağlantı hatası metni</comment>
   </data>
 </root>
