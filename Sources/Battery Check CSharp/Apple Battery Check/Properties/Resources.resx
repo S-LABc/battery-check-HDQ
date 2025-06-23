@@ -126,58 +126,59 @@
   </data>
   <data name="EXTANSION_FORMAT" xml:space="preserve">
     <value>.TXT</value>
-    <comment>Расширение документа логов</comment>
   </data>
   <data name="FILE_NAME_FORMAT" xml:space="preserve">
     <value>HH-mm-ss_dd.MM.yyyy</value>
-    <comment>Шаблон имени файла логов</comment>
   </data>
   <data name="KEY_HDQ" xml:space="preserve">
     <value>A</value>
-    <comment>Ключ отправляемый в ардуино для интерфейса HDQ</comment>
   </data>
   <data name="KEY_I2C" xml:space="preserve">
     <value>B</value>
-    <comment>Ключ отправляемый в ардуино для интерфейса I2C</comment>
   </data>
   <data name="LBL_DEFAULT_TEXT" xml:space="preserve">
     <value>--/--</value>
-    <comment>Стартовое значение для текста в поле данных лейбла</comment>
   </data>
   <data name="PREFIX_CONTROLLER" xml:space="preserve">
-    <value>bq27</value>
-    <comment>Приставка для модкли контроллера</comment>
+    <value>BQ27</value>
   </data>
   <data name="PREFIX_HEXADECIMAL" xml:space="preserve">
     <value>0x</value>
-    <comment>Приставка шестнадцатериной системы счисления</comment>
   </data>
   <data name="SPACE_TEXT" xml:space="preserve">
     <value> - </value>
-    <comment>Разделитель внутри документа логов</comment>
   </data>
   <data name="SUFFIX_CAPACITY" xml:space="preserve">
-    <value> мАч</value>
-    <comment>Окончание для полей ЁМКОСТИ</comment>
+    <value> mAh</value>
   </data>
   <data name="SUFFIX_CELSIUS_DEGREE" xml:space="preserve">
-    <value> °C</value>
-    <comment>Окончание для поля ТЕМПЕРАТУРА</comment>
+    <value>°C</value>
+  </data>
+  <data name="SUFFIX_CURRENT" xml:space="preserve">
+    <value> A</value>
+  </data>
+  <data name="SUFFIX_CURRENT_MA" xml:space="preserve">
+    <value> mA</value>
   </data>
   <data name="SUFFIX_PERCENT" xml:space="preserve">
-    <value> %</value>
-    <comment>Окончание для поля УРОВНЯ ЗАРЯДКИ</comment>
+    <value>%</value>
+  </data>
+  <data name="SUFFIX_POWER" xml:space="preserve">
+    <value> W</value>
+  </data>
+  <data name="SUFFIX_POWER_MW" xml:space="preserve">
+    <value> mW</value>
   </data>
   <data name="SUFFIX_VOLTAGE" xml:space="preserve">
-    <value> В</value>
-    <comment>Окончание для поля НАПРЯЖЕНИЕ</comment>
+    <value> V</value>
+  </data>
+  <data name="SUFFIX_VOLTAGE_MV" xml:space="preserve">
+    <value> mV</value>
   </data>
   <data name="TEXT_HDQ" xml:space="preserve">
     <value>HDQ</value>
-    <comment>Значение текста для условий</comment>
   </data>
   <data name="TEXT_I2C" xml:space="preserve">
     <value>I2C</value>
-    <comment>Значение текста для условий</comment>
   </data>
 </root>
